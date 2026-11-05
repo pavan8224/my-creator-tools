@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Tools Hub | My Custom Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .tool-card {
+            transition: all 0.25s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.25);
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Top Header -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-xl font-bold shadow-lg shadow-blue-600/30">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-wide text-white">Creator Studio Hub</h1>
+                    <p class="text-xs text-slate-400">My Personal HTML Content Creation Toolkit</p>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="relative w-full sm:w-72">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+                <input type="text" id="searchInput" placeholder="Search tools..." 
+                    class="w-full bg-slate-800 border border-slate-700 rounded-lg pl-10 pr-4 py-2 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-blue-500">
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full">
+        
+        <!-- Category Filters -->
+        <div class="flex flex-wrap items-center gap-2 mb-8" id="categoryButtons">
+            <button onclick="filterCategory('All')" class="cat-btn active bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-medium transition">All Tools</button>
+            <button onclick="filterCategory('Video & Shorts')" class="cat-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-xs font-medium transition">Video & Shorts</button>
+            <button onclick="filterCategory('Text & Quotes')" class="cat-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-xs font-medium transition">Text & Quotes</button>
+            <button onclick="filterCategory('PDF & Docs')" class="cat-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-xs font-medium transition">PDF & Docs</button>
+            <button onclick="filterCategory('SEO & Tags')" class="cat-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-xs font-medium transition">SEO & Tags</button>
+        </div>
+
+        <!-- Tools Grid -->
+        <div id="toolsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <!-- JavaScript automatically renders cards here -->
+        </div>
+
+        <!-- Empty State (If search finds nothing) -->
+        <div id="emptyState" class="hidden text-center py-16">
+            <i class="fa-regular fa-folder-open text-4xl text-slate-600 mb-3"></i>
+            <p class="text-slate-400">कोई टूल नहीं मिला। दूसरा नाम सर्च करें।</p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-5 text-center text-xs text-slate-500">
+        <p>Hosted on GitHub Pages • Built for Fast Content Creation Workflow</p>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- 👇 यहाँ अपने नए HTML TOOLS जोड़ें (TOOLS LIST) 👇 -->
+    <!-- ========================================== -->
+    <script>
+        const myTools = [
+            {
+                title: "Shorts Quote Card Maker",
+                description: "9:16 vertical motivational quotes और true lines जनरेट करने का टूल।",
+                category: "Video & Shorts",
+                icon: "fa-solid fa-mobile-screen-button",
+                color: "text-purple-400 bg-purple-500/10",
+                link: "./tools/quote-maker.html" // अपनी HTML फाइल का पाथ यहाँ दें
+            },
+            {
+                title: "YouTube Title & Hashtag Generator",
+                description: "US Audience और वायरल रीच के लिए ऑटोमैटिक टाइटल और टैग्स कॉपी करने का टूल।",
+                category: "SEO & Tags",
+                icon: "fa-brands fa-youtube",
+                color: "text-red-400 bg-red-500/10",
+                link: "./tools/yt-tags.html"
+            },
+            {
+                title: "JSON to PDF Book Formatter",
+                description: "JSON डेटा को सीधे A4 प्रिंट-रेडी नोट्स और पीडीएफ में बदलने वाला इंजन।",
+                category: "PDF & Docs",
+                icon: "fa-solid fa-file-pdf",
+                color: "text-emerald-400 bg-emerald-500/10",
+                link: "./tools/pdf-studio.html"
+            },
+            {
+                title: "Script Timer & Word Counter",
+                description: "60-second YouTube Shorts स्क्रिप्ट की लंबाई और बोलने का समय चेक करने के लिए।",
+                category: "Text & Quotes",
+                icon: "fa-solid fa-stopwatch",
+                color: "text-amber-400 bg-amber-500/10",
+                link: "./tools/script-timer.html"
+            }
+        ];
+
+        // --- Render & Filter Logic ---
+        let currentCategory = 'All';
+        const grid = document.getElementById('toolsGrid');
+        const emptyState = document.getElementById('emptyState');
+        const searchInput = document.getElementById('searchInput');
+
+        function renderTools() {
+            const query = searchInput.value.toLowerCase();
+            grid.innerHTML = '';
+
+            const filtered = myTools.filter(tool => {
+                const matchesCat = currentCategory === 'All' || tool.category === currentCategory;
+                const matchesSearch = tool.title.toLowerCase().includes(query) || 
+                                      tool.description.toLowerCase().includes(query);
+                return matchesCat && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                filtered.forEach(tool => {
+                    grid.innerHTML += `
+                        <a href="${tool.link}" target="_blank" class="tool-card bg-slate-800/60 border border-slate-700/70 rounded-xl p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="w-11 h-11 rounded-lg ${tool.color} flex items-center justify-center text-lg">
+                                        <i class="${tool.icon}"></i>
+                                    </div>
+                                    <span class="text-[11px] bg-slate-700/60 text-slate-300 px-2.5 py-1 rounded-md font-medium">
+                                        ${tool.category}
+                                    </span>
+                                </div>
+                                <h3 class="text-base font-semibold text-white mb-1.5">${tool.title}</h3>
+                                <p class="text-xs text-slate-400 leading-relaxed">${tool.description}</p>
+                            </div>
+                            <div class="mt-5 pt-3 border-t border-slate-700/50 flex items-center justify-between text-xs text-blue-400 font-medium">
+                                <span>Open Tool</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+                        </a>
+                    `;
+                });
+            }
+        }
+
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.innerText.includes(cat) || (cat === 'All' && btn.innerText === 'All Tools')) {
+                    btn.className = "cat-btn active bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-medium transition";
+                } else {
+                    btn.className = "cat-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-xs font-medium transition";
+                }
+            });
+            renderTools();
+        }
+
+        searchInput.addEventListener('input', renderTools);
+        renderTools();
+    </script>
+</body>
+</html>
