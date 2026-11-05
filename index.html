@@ -3,178 +3,325 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creator Tools Hub | My Custom Toolkit</title>
+    <title>Smart Creator OS | Auto-Sync Toolkit</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .tool-card {
-            transition: all 0.25s ease;
-        }
-        .tool-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.25);
-            border-color: #3b82f6;
-        }
+        body { background-color: #0b0f19; color: #f1f5f9; font-family: 'Inter', system-ui, sans-serif; }
+        .glass { background: rgba(30, 41, 59, 0.65); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+        .tool-card { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+        .tool-card:hover { transform: translateY(-4px); border-color: #3b82f6; box-shadow: 0 12px 30px -8px rgba(59, 130, 246, 0.3); }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Top Header -->
-    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <!-- Top Navigation Bar -->
+    <header class="glass sticky top-0 z-40 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-xl font-bold shadow-lg shadow-blue-600/30">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-lg font-bold shadow-lg shadow-blue-500/30">
+                    <i class="fa-solid fa-bolt"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-wide text-white">Creator Studio Hub</h1>
-                    <p class="text-xs text-slate-400">My Personal HTML Content Creation Toolkit</p>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-lg font-bold text-white tracking-wide">Creator Studio OS</h1>
+                        <span id="toolCountBadge" class="text-[11px] bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full font-medium">Scanning...</span>
+                    </div>
+                    <p id="repoStatus" class="text-xs text-slate-400">Auto-Syncing with GitHub Repository...</p>
                 </div>
             </div>
 
-            <!-- Search Bar -->
-            <div class="relative w-full sm:w-72">
-                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-sm"></i>
-                <input type="text" id="searchInput" placeholder="Search tools..." 
-                    class="w-full bg-slate-800 border border-slate-700 rounded-lg pl-10 pr-4 py-2 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-blue-500">
+            <!-- Search & Controls -->
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+                <div class="relative flex-1 sm:w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                    <input type="text" id="searchInput" placeholder="Search tools or folders..." 
+                        class="w-full bg-slate-900/90 border border-slate-700/80 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+                </div>
+                <button onclick="syncGitHubTools(true)" title="Force Refresh Tools" class="p-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
+                    <i id="refreshIcon" class="fa-solid fa-arrows-rotate text-sm"></i>
+                </button>
+                <button onclick="openSettings()" title="GitHub Repo Settings" class="p-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
+                    <i class="fa-solid fa-gear text-sm"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Section -->
-    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full">
-        
-        <!-- Category Filters -->
-        <div class="flex flex-wrap items-center gap-2 mb-8" id="categoryButtons">
-            <button onclick="filterCategory('All')" class="cat-btn active bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-medium transition">All Tools</button>
-            <button onclick="filterCategory('Video & Shorts')" class="cat-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-xs font-medium transition">Video & Shorts</button>
-            <button onclick="filterCategory('Text & Quotes')" class="cat-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-xs font-medium transition">Text & Quotes</button>
-            <button onclick="filterCategory('PDF & Docs')" class="cat-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-xs font-medium transition">PDF & Docs</button>
-            <button onclick="filterCategory('SEO & Tags')" class="cat-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-xs font-medium transition">SEO & Tags</button>
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-1 w-full">
+
+        <!-- Filter Tabs -->
+        <div class="flex items-center justify-between flex-wrap gap-3 mb-7">
+            <div class="flex flex-wrap items-center gap-2" id="filterTabs">
+                <button onclick="setFilter('all')" class="tab-btn bg-blue-600 text-white px-4 py-1.5 rounded-lg text-xs font-medium transition">All Projects</button>
+                <button onclick="setFilter('folder')" class="tab-btn bg-slate-800/80 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-lg text-xs font-medium transition"><i class="fa-solid fa-folder-open mr-1.5 text-amber-400"></i>Folder Apps</button>
+                <button onclick="setFilter('file')" class="tab-btn bg-slate-800/80 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-lg text-xs font-medium transition"><i class="fa-solid fa-code mr-1.5 text-emerald-400"></i>Single HTML</button>
+                <button onclick="setFilter('pinned')" class="tab-btn bg-slate-800/80 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-lg text-xs font-medium transition"><i class="fa-solid fa-thumbtack mr-1.5 text-rose-400"></i>Pinned</button>
+            </div>
         </div>
 
-        <!-- Tools Grid -->
-        <div id="toolsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            <!-- JavaScript automatically renders cards here -->
+        <!-- Loading Skeleton -->
+        <div id="loader" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="h-40 rounded-xl bg-slate-800/40 animate-pulse border border-slate-800"></div>
+            <div class="h-40 rounded-xl bg-slate-800/40 animate-pulse border border-slate-800"></div>
+            <div class="h-40 rounded-xl bg-slate-800/40 animate-pulse border border-slate-800"></div>
         </div>
 
-        <!-- Empty State (If search finds nothing) -->
-        <div id="emptyState" class="hidden text-center py-16">
-            <i class="fa-regular fa-folder-open text-4xl text-slate-600 mb-3"></i>
-            <p class="text-slate-400">कोई टूल नहीं मिला। दूसरा नाम सर्च करें।</p>
+        <!-- Dynamic Tools Grid -->
+        <div id="toolsGrid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+
+        <!-- Empty / Guide State -->
+        <div id="emptyState" class="hidden glass rounded-2xl p-10 text-center max-w-lg mx-auto my-8">
+            <div class="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center mx-auto mb-4 text-2xl text-blue-400">
+                <i class="fa-solid fa-folder-plus"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">No Tools Found Yet!</h3>
+            <p class="text-xs text-slate-400 leading-relaxed mb-5">
+                अपनी GitHub Repository में कोई भी नया <b>Project Folder</b> या <b>.html file</b> अपलोड करें (या <code>tools/</code> फोल्डर में डालें), यह डैशबोर्ड उसे अपने आप यहाँ दिखा देगा!
+            </p>
+            <button onclick="openSettings()" class="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-lg text-xs font-semibold transition">
+                <i class="fa-brands fa-github mr-1.5"></i> Check Repository Settings
+            </button>
         </div>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-800 py-5 text-center text-xs text-slate-500">
-        <p>Hosted on GitHub Pages • Built for Fast Content Creation Workflow</p>
-    </footer>
+    <!-- In-App Fullscreen Tool Runner (Iframe Modal) -->
+    <div id="appRunnerModal" class="fixed inset-0 bg-slate-950 z-50 hidden flex-col">
+        <div class="h-12 bg-slate-900 border-b border-slate-800 px-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <button onclick="closeAppRunner()" class="px-3 py-1 rounded-md bg-slate-800 hover:bg-rose-600 text-slate-200 hover:text-white text-xs font-medium transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Hub
+                </button>
+                <span id="runningAppTitle" class="text-sm font-semibold text-white truncate">Running Tool</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <a id="externalAppLink" href="#" target="_blank" class="px-3 py-1 rounded-md bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white text-xs font-medium transition">
+                    Open in New Tab <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+                </a>
+            </div>
+        </div>
+        <iframe id="appIframe" class="w-full flex-1 bg-white border-0"></iframe>
+    </div>
 
-    <!-- ========================================== -->
-    <!-- 👇 यहाँ अपने नए HTML TOOLS जोड़ें (TOOLS LIST) 👇 -->
-    <!-- ========================================== -->
+    <!-- GitHub Settings Modal (For Local Testing or Custom Repo) -->
+    <div id="settingsModal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="glass bg-slate-900 rounded-2xl max-w-md w-full p-6 border border-slate-700">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-base font-bold text-white"><i class="fa-brands fa-github mr-2"></i>GitHub Auto-Sync Config</h3>
+                <button onclick="closeSettings()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p class="text-xs text-slate-400 mb-4">
+                अगर यह पेज GitHub Pages पर लाइव है, तो यह अपने आप डिटेक्ट कर लेता है। आप चाहें तो मैन्युअली भी अपना Username और Repo नाम डाल सकते हैं:
+            </p>
+            <div class="space-y-3">
+                <div>
+                    <label class="text-xs text-slate-300 block mb-1">GitHub Username</label>
+                    <input type="text" id="cfgOwner" placeholder="e.g. pavankushwah" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+                </div>
+                <div>
+                    <label class="text-xs text-slate-300 block mb-1">Repository Name</label>
+                    <input type="text" id="cfgRepo" placeholder="e.g. my-tools" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+                </div>
+                <div>
+                    <label class="text-xs text-slate-300 block mb-1">Scan Folder (Leave blank for Root + /tools)</label>
+                    <input type="text" id="cfgPath" placeholder="Optional: e.g. tools" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end gap-2">
+                <button onclick="closeSettings()" class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 text-xs">Cancel</button>
+                <button onclick="saveSettings()" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold">Save & Sync Now</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        const myTools = [
-            {
-                title: "Shorts Quote Card Maker",
-                description: "9:16 vertical motivational quotes और true lines जनरेट करने का टूल।",
-                category: "Video & Shorts",
-                icon: "fa-solid fa-mobile-screen-button",
-                color: "text-purple-400 bg-purple-500/10",
-                link: "./tools/quote-maker.html" // अपनी HTML फाइल का पाथ यहाँ दें
-            },
-            {
-                title: "YouTube Title & Hashtag Generator",
-                description: "US Audience और वायरल रीच के लिए ऑटोमैटिक टाइटल और टैग्स कॉपी करने का टूल।",
-                category: "SEO & Tags",
-                icon: "fa-brands fa-youtube",
-                color: "text-red-400 bg-red-500/10",
-                link: "./tools/yt-tags.html"
-            },
-            {
-                title: "JSON to PDF Book Formatter",
-                description: "JSON डेटा को सीधे A4 प्रिंट-रेडी नोट्स और पीडीएफ में बदलने वाला इंजन।",
-                category: "PDF & Docs",
-                icon: "fa-solid fa-file-pdf",
-                color: "text-emerald-400 bg-emerald-500/10",
-                link: "./tools/pdf-studio.html"
-            },
-            {
-                title: "Script Timer & Word Counter",
-                description: "60-second YouTube Shorts स्क्रिप्ट की लंबाई और बोलने का समय चेक करने के लिए।",
-                category: "Text & Quotes",
-                icon: "fa-solid fa-stopwatch",
-                color: "text-amber-400 bg-amber-500/10",
-                link: "./tools/script-timer.html"
+        // ============================================================================
+        // 🧠 SMART AUTO-DISCOVERY ENGINE (GitHub API + Auto Folder/File Scanner)
+        // ============================================================================
+        let discoveredTools = [];
+        let currentFilter = 'all';
+        let pinnedTools = JSON.parse(localStorage.getItem('pinned_creator_tools') || '[]');
+
+        // 1. Auto-detect GitHub Username & Repo from github.io URL
+        function getRepoConfig() {
+            let savedOwner = localStorage.getItem('gh_owner') || '';
+            let savedRepo = localStorage.getItem('gh_repo') || '';
+            let savedPath = localStorage.getItem('gh_path') || '';
+
+            const host = window.location.hostname;
+            const pathParts = window.location.pathname.split('/').filter(Boolean);
+
+            if (!savedOwner && host.endsWith('github.io')) {
+                savedOwner = host.split('.')[0];
+                savedRepo = pathParts.length > 0 ? pathParts[0] : `${savedOwner}.github.io`;
             }
-        ];
 
-        // --- Render & Filter Logic ---
-        let currentCategory = 'All';
-        const grid = document.getElementById('toolsGrid');
-        const emptyState = document.getElementById('emptyState');
-        const searchInput = document.getElementById('searchInput');
+            return { owner: savedOwner, repo: savedRepo, path: savedPath };
+        }
 
+        // 2. Clean Slug Name -> Readable Title (e.g., "pdf-book-generator.html" -> "Pdf Book Generator")
+        function formatSmartTitle(rawName) {
+            return rawName
+                .replace(/\.html$/i, '')
+                .replace(/[-_]/g, ' ')
+                .replace(/\b\w/g, char => char.toUpperCase());
+        }
+
+        // 3. Smart Icon & Color Picker based on Project/File Name keywords
+        function getSmartVisuals(name, type) {
+            const lower = name.toLowerCase();
+            if (lower.includes('pdf') || lower.includes('book') || lower.includes('doc') || lower.includes('note')) {
+                return { icon: 'fa-solid fa-file-pdf', color: 'text-rose-400 bg-rose-500/10 border-rose-500/20', tag: 'PDF & Docs' };
+            }
+            if (lower.includes('yt') || lower.includes('youtube') || lower.includes('video') || lower.includes('short') || lower.includes('reel')) {
+                return { icon: 'fa-brands fa-youtube', color: 'text-red-400 bg-red-500/10 border-red-500/20', tag: 'Video & Shorts' };
+            }
+            if (lower.includes('quote') || lower.includes('text') || lower.includes('script') || lower.includes('caption') || lower.includes('font')) {
+                return { icon: 'fa-solid fa-quote-left', color: 'text-purple-400 bg-purple-500/10 border-purple-500/20', tag: 'Quotes & Script' };
+            }
+            if (lower.includes('image') || lower.includes('thumb') || lower.includes('photo') || lower.includes('canvas') || lower.includes('banner')) {
+                return { icon: 'fa-solid fa-palette', color: 'text-amber-400 bg-amber-500/10 border-amber-500/20', tag: 'Design & Graphics' };
+            }
+            if (lower.includes('json') || lower.includes('api') || lower.includes('code') || lower.includes('format')) {
+                return { icon: 'fa-solid fa-brackets-curly', color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20', tag: 'Dev & Data' };
+            }
+            if (type === 'folder') {
+                return { icon: 'fa-solid fa-folder-tree', color: 'text-blue-400 bg-blue-500/10 border-blue-500/20', tag: 'Full Project' };
+            }
+            return { icon: 'fa-solid fa-wand-magic-sparkles', color: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20', tag: 'HTML Utility' };
+        }
+
+        // 4. Fetch contents from GitHub API automatically
+        async function fetchDirectoryItems(owner, repo, dirPath = '') {
+            const url = `https://api.github.com/repos/${owner}/${repo}/contents/${dirPath}`;
+            const res = await fetch(url);
+            if (!res.ok) return [];
+            return await res.json();
+        }
+
+        async function syncGitHubTools(forceRefresh = false) {
+            const { owner, repo, path } = getRepoConfig();
+            const loader = document.getElementById('loader');
+            const grid = document.getElementById('toolsGrid');
+            const emptyState = document.getElementById('emptyState');
+            const statusText = document.getElementById('repoStatus');
+            const refreshIcon = document.getElementById('refreshIcon');
+
+            if (!owner || !repo) {
+                loader.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                statusText.innerText = "Click Gear Icon (⚙️) to set your GitHub Username & Repo";
+                openSettings();
+                return;
+            }
+
+            refreshIcon.classList.add('fa-spin');
+            loader.classList.remove('hidden');
+            grid.classList.add('hidden');
+            statusText.innerText = `Live Connected: ${owner}/${repo}`;
+
+            try {
+                let items = await fetchDirectoryItems(owner, repo, path);
+
+                // If scanning root and a "tools" folder exists, also auto-scan inside "/tools"!
+                const toolsSubfolder = items.find(i => i.type === 'dir' && ['tools', 'projects', 'apps'].includes(i.name.toLowerCase()));
+                if (!path && toolsSubfolder) {
+                    const subItems = await fetchDirectoryItems(owner, repo, toolsSubfolder.path);
+                    items = [...items.filter(i => i.path !== toolsSubfolder.path), ...subItems];
+                }
+
+                const systemIgnore = ['index.html', '404.html', 'readme.md', '.git', '.github', 'assets', 'css', 'js', 'images', 'img', 'icons'];
+
+                discoveredTools = items
+                    .filter(item => {
+                        const lowerName = item.name.toLowerCase();
+                        if (systemIgnore.includes(lowerName) || lowerName.startsWith('.')) return false;
+                        // Accept all project directories OR standalone .html files
+                        return item.type === 'dir' || (item.type === 'file' && lowerName.endsWith('.html'));
+                    })
+                    .map(item => {
+                        const isFolder = item.type === 'dir';
+                        const visuals = getSmartVisuals(item.name, isFolder ? 'folder' : 'file');
+                        // Construct relative playable URL
+                        const launchUrl = isFolder ? `./${item.path}/` : `./${item.path}`;
+
+                        return {
+                            id: item.path,
+                            title: formatSmartTitle(item.name),
+                            rawPath: item.path,
+                            type: isFolder ? 'folder' : 'file',
+                            url: launchUrl,
+                            githubUrl: item.html_url,
+                            ...visuals
+                        };
+                    });
+
+                document.getElementById('toolCountBadge').innerText = `${discoveredTools.length} Auto-Loaded`;
+                renderTools();
+            } catch (err) {
+                console.error("GitHub Sync Error:", err);
+                statusText.innerText = "Error scanning repo. Check username/repo in settings.";
+            } finally {
+                loader.classList.add('hidden');
+                refreshIcon.classList.remove('fa-spin');
+            }
+        }
+
+        // 5. Render Cards
         function renderTools() {
-            const query = searchInput.value.toLowerCase();
+            const grid = document.getElementById('toolsGrid');
+            const emptyState = document.getElementById('emptyState');
+            const query = document.getElementById('searchInput').value.toLowerCase();
+
             grid.innerHTML = '';
 
-            const filtered = myTools.filter(tool => {
-                const matchesCat = currentCategory === 'All' || tool.category === currentCategory;
-                const matchesSearch = tool.title.toLowerCase().includes(query) || 
-                                      tool.description.toLowerCase().includes(query);
-                return matchesCat && matchesSearch;
+            // Sort pinned tools on top
+            const sorted = [...discoveredTools].sort((a, b) => {
+                const aPin = pinnedTools.includes(a.id) ? 1 : 0;
+                const bPin = pinnedTools.includes(b.id) ? 1 : 0;
+                return bPin - aPin || a.title.localeCompare(b.title);
+            });
+
+            const filtered = sorted.filter(tool => {
+                const matchesSearch = tool.title.toLowerCase().includes(query) || tool.rawPath.toLowerCase().includes(query) || tool.tag.toLowerCase().includes(query);
+                if (!matchesSearch) return false;
+                if (currentFilter === 'folder') return tool.type === 'folder';
+                if (currentFilter === 'file') return tool.type === 'file';
+                if (currentFilter === 'pinned') return pinnedTools.includes(tool.id);
+                return true;
             });
 
             if (filtered.length === 0) {
+                grid.classList.add('hidden');
                 emptyState.classList.remove('hidden');
-            } else {
-                emptyState.classList.add('hidden');
-                filtered.forEach(tool => {
-                    grid.innerHTML += `
-                        <a href="${tool.link}" target="_blank" class="tool-card bg-slate-800/60 border border-slate-700/70 rounded-xl p-5 flex flex-col justify-between">
-                            <div>
-                                <div class="flex items-center justify-between mb-4">
-                                    <div class="w-11 h-11 rounded-lg ${tool.color} flex items-center justify-center text-lg">
-                                        <i class="${tool.icon}"></i>
-                                    </div>
-                                    <span class="text-[11px] bg-slate-700/60 text-slate-300 px-2.5 py-1 rounded-md font-medium">
-                                        ${tool.category}
-                                    </span>
-                                </div>
-                                <h3 class="text-base font-semibold text-white mb-1.5">${tool.title}</h3>
-                                <p class="text-xs text-slate-400 leading-relaxed">${tool.description}</p>
-                            </div>
-                            <div class="mt-5 pt-3 border-t border-slate-700/50 flex items-center justify-between text-xs text-blue-400 font-medium">
-                                <span>Open Tool</span>
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                            </div>
-                        </a>
-                    `;
-                });
+                return;
             }
-        }
 
-        function filterCategory(cat) {
-            currentCategory = cat;
-            document.querySelectorAll('.cat-btn').forEach(btn => {
-                if (btn.innerText.includes(cat) || (cat === 'All' && btn.innerText === 'All Tools')) {
-                    btn.className = "cat-btn active bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-medium transition";
-                } else {
-                    btn.className = "cat-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-xs font-medium transition";
-                }
-            });
-            renderTools();
-        }
+            emptyState.classList.add('hidden');
+            grid.classList.remove('hidden');
 
-        searchInput.addEventListener('input', renderTools);
-        renderTools();
-    </script>
-</body>
-</html>
+            filtered.forEach(tool => {
+                const isPinned = pinnedTools.includes(tool.id);
+                grid.innerHTML += `
+                    <div class="tool-card glass rounded-2xl p-5 flex flex-col justify-between relative group">
+                        <div>
+                            <div class="flex items-start justify-between gap-2 mb-4">
+                                <div class="w-12 h-12 rounded-xl border ${tool.color} flex items-center justify-center text-xl">
+                                    <i class="${tool.icon}"></i>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="text-[11px] bg-slate-800 text-slate-300 border border-slate-700 px-2.5 py-1 rounded-md font-medium">
+                                        ${tool.type === 'folder' ? '📁 Project Folder' : '⚡ HTML Tool'}
+                                    </span>
+                                    <button onclick="togglePin('${tool.id}')" title="Pin Tool" class="w-7 h-7 rounded-md flex items-center justify-center ${isPinned ? 'text-rose-400 bg-rose-500/10' : 'text-slate-500 hover:text-slate-300 bg-slate-800/60'} transition">
+                                        <i class="fa-solid fa-thumbtack text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <h3 class="text-base font-bold text-white group-hover:text-blue-400 transition mb-1">${tool.title}</h3>
+                            <p class="text-xs text-slate-400 font-mo
