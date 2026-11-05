@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Creator OS | Pavan's Toolkit</title>
+    <title>Creator Studio OS | Pavan's Toolkit</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body { background-color: #0b0f19; color: #f1f5f9; font-family: system-ui, -apple-system, sans-serif; }
-        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+        .glass { background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
         .tool-card { transition: all 0.2s ease; }
         .tool-card:hover { transform: translateY(-3px); border-color: #3b82f6; box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3); }
     </style>
@@ -17,267 +17,147 @@
 
     <!-- Header -->
     <header class="glass sticky top-0 z-40 border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-4">
+        <div class="max-w-7xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-lg font-bold shadow-lg shadow-blue-500/30">
                     <i class="fa-solid fa-bolt text-white"></i>
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <h1 class="text-lg font-bold text-white tracking-wide">Creator Studio OS</h1>
-                        <span id="toolCountBadge" class="text-[11px] bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2.5 py-0.5 rounded-full font-medium">Loading...</span>
+                        <h1 class="text-lg font-bold text-white">Creator Studio OS</h1>
+                        <span id="toolCountBadge" class="text-[11px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-medium">Ready</span>
                     </div>
-                    <p id="repoStatus" class="text-xs text-slate-400">Connecting to pavan8224/my-creator-tools...</p>
+                    <p id="repoStatus" class="text-xs text-slate-400">pavan8224 / my-creator-tools</p>
                 </div>
             </div>
 
-            <!-- Search & Buttons -->
-            <div class="flex items-center gap-2.5 w-full sm:w-auto">
-                <div class="relative flex-1 sm:w-72">
+            <!-- Search & Refresh -->
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <div class="relative flex-1 sm:w-64">
                     <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
-                    <input type="text" id="searchInput" placeholder="Search tools or folders..." 
-                        class="w-full bg-slate-900/90 border border-slate-700/80 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+                    <input type="text" id="searchInput" placeholder="Search tools..." 
+                        class="w-full bg-slate-900/90 border border-slate-700 rounded-lg pl-9 pr-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
                 </div>
-                <button onclick="syncGitHubTools()" title="Refresh Tools" class="p-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
-                    <i id="refreshIcon" class="fa-solid fa-arrows-rotate text-sm"></i>
-                </button>
-                <button onclick="openSettings()" title="Settings" class="p-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
-                    <i class="fa-solid fa-gear text-sm"></i>
+                <button onclick="syncFromGitHub()" title="Sync New Tools" class="px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center gap-1.5 transition">
+                    <i id="refreshIcon" class="fa-solid fa-arrows-rotate"></i> Sync
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
+    <!-- Main Section -->
     <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
 
-        <!-- Filter Buttons -->
+        <!-- Filter Tabs -->
         <div class="flex flex-wrap items-center gap-2 mb-6">
-            <button onclick="setFilter('all', this)" class="tab-btn bg-blue-600 text-white px-4 py-1.5 rounded-lg text-xs font-medium transition">All Projects</button>
-            <button onclick="setFilter('folder', this)" class="tab-btn bg-slate-800/80 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-lg text-xs font-medium transition">
-                <i class="fa-solid fa-folder-open mr-1.5 text-amber-400"></i>Folder Apps
+            <button onclick="setFilter('all', this)" class="tab-btn bg-blue-600 text-white px-4 py-1.5 rounded-lg text-xs font-medium transition">All Tools</button>
+            <button onclick="setFilter('folder', this)" class="tab-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-lg text-xs font-medium transition">
+                <i class="fa-solid fa-folder-open mr-1 text-amber-400"></i> Folders
             </button>
-            <button onclick="setFilter('file', this)" class="tab-btn bg-slate-800/80 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-lg text-xs font-medium transition">
-                <i class="fa-solid fa-code mr-1.5 text-emerald-400"></i>Single HTML
-            </button>
-            <button onclick="setFilter('pinned', this)" class="tab-btn bg-slate-800/80 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-lg text-xs font-medium transition">
-                <i class="fa-solid fa-thumbtack mr-1.5 text-rose-400"></i>Pinned
+            <button onclick="setFilter('file', this)" class="tab-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-lg text-xs font-medium transition">
+                <i class="fa-solid fa-code mr-1 text-emerald-400"></i> HTML Tools
             </button>
         </div>
 
-        <!-- Loader -->
-        <div id="loader" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div class="h-36 rounded-xl bg-slate-800/40 animate-pulse border border-slate-800"></div>
-            <div class="h-36 rounded-xl bg-slate-800/40 animate-pulse border border-slate-800"></div>
-            <div class="h-36 rounded-xl bg-slate-800/40 animate-pulse border border-slate-800"></div>
-        </div>
-
-        <!-- Error / Status Box -->
-        <div id="errorBox" class="hidden glass rounded-xl p-6 text-center border border-rose-500/30 my-4">
-            <p id="errorText" class="text-sm text-rose-400 mb-3"></p>
-            <button onclick="syncGitHubTools()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-semibold">Retry Sync</button>
-        </div>
-
-        <!-- Tools Grid -->
-        <div id="toolsGrid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        <!-- Tools Grid (Loads Immediately!) -->
+        <div id="toolsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
     </main>
 
-    <!-- In-App Fullscreen Preview Modal -->
+    <!-- In-App Fullscreen Tool Runner -->
     <div id="appRunnerModal" class="fixed inset-0 bg-slate-950 z-50 hidden flex-col">
         <div class="h-12 bg-slate-900 border-b border-slate-800 px-4 flex items-center justify-between">
             <div class="flex items-center gap-3 overflow-hidden">
-                <button onclick="closeAppRunner()" class="px-3 py-1.5 rounded-md bg-slate-800 hover:bg-rose-600 text-slate-200 hover:text-white text-xs font-medium transition flex items-center gap-1.5 shrink-0">
+                <button onclick="closeAppRunner()" class="px-3 py-1.5 rounded-md bg-slate-800 hover:bg-rose-600 text-white text-xs font-medium transition flex items-center gap-1.5 shrink-0">
                     <i class="fa-solid fa-arrow-left"></i> Back
                 </button>
-                <span id="runningAppTitle" class="text-xs sm:text-sm font-semibold text-white truncate">Running Tool</span>
+                <span id="runningAppTitle" class="text-xs sm:text-sm font-semibold text-white truncate">Tool</span>
             </div>
-            <a id="externalAppLink" href="#" target="_blank" class="px-3 py-1.5 rounded-md bg-blue-600 text-white text-xs font-medium transition shrink-0">
-                Full Tab <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+            <a id="externalAppLink" href="#" target="_blank" class="px-3 py-1.5 rounded-md bg-blue-600 text-white text-xs font-medium shrink-0">
+                New Tab <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
             </a>
         </div>
         <iframe id="appIframe" class="w-full flex-1 bg-white border-0"></iframe>
     </div>
 
-    <!-- Settings Modal -->
-    <div id="settingsModal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-        <div class="glass bg-slate-900 rounded-2xl max-w-md w-full p-6 border border-slate-700">
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-base font-bold text-white"><i class="fa-brands fa-github mr-2"></i>GitHub Repo Settings</h3>
-                <button onclick="closeSettings()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="space-y-3">
-                <div>
-                    <label class="text-xs text-slate-300 block mb-1">GitHub Username</label>
-                    <input type="text" id="cfgOwner" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
-                </div>
-                <div>
-                    <label class="text-xs text-slate-300 block mb-1">Repository Name</label>
-                    <input type="text" id="cfgRepo" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
-                </div>
-            </div>
-            <div class="mt-6 flex justify-end gap-2">
-                <button onclick="closeSettings()" class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 text-xs">Cancel</button>
-                <button onclick="saveSettings()" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold">Save & Reload</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        let discoveredTools = [];
+        const GITHUB_OWNER = 'pavan8224';
+        const GITHUB_REPO = 'my-creator-tools';
         let currentFilter = 'all';
-        let pinnedTools = JSON.parse(localStorage.getItem('pinned_creator_tools') || '[]');
 
-        // Default Pre-Configured for pavan8224 / my-creator-tools
-        function getRepoConfig() {
-            let owner = localStorage.getItem('gh_owner') || 'pavan8224';
-            let repo = localStorage.getItem('gh_repo') || 'my-creator-tools';
+        // 1. Pre-Loaded Default Tools (Taaki 0 second mein bina ruke turant dikhe!)
+        let discoveredTools = [
+            makeToolItem('tools/PK POSTER STUDIO - AI-Powered Hindi Poster Designer.html', 'file'),
+            makeToolItem('tools/pk_quotes_reels_studio_usa_edition (1).html', 'file'),
+            makeToolItem('tools/pk_viral_suvichar_reels_studio_v7_0_true_2k_mp4.html', 'file'),
+            makeToolItem('tools/New.html', 'file')
+        ];
 
-            const host = window.location.hostname;
-            const pathParts = window.location.pathname.split('/').filter(Boolean);
-            if (!localStorage.getItem('gh_owner') && host.endsWith('github.io')) {
-                owner = host.split('.')[0];
-                if (pathParts.length > 0) repo = pathParts[0];
-            }
-            return { owner, repo };
-        }
-
-        function formatSmartTitle(rawName) {
-            return rawName
+        function makeToolItem(rawPath, type) {
+            const fileName = rawPath.split('/').pop();
+            const cleanTitle = fileName
                 .replace(/\.html$/i, '')
                 .replace(/[-_]/g, ' ')
                 .replace(/\s+/g, ' ')
                 .trim();
+
+            const lower = fileName.toLowerCase();
+            let icon = 'fa-solid fa-wand-magic-sparkles';
+            let color = 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20';
+            let tag = type === 'folder' ? 'Folder App' : 'HTML Studio';
+
+            if (lower.includes('poster') || lower.includes('banner')) {
+                icon = 'fa-solid fa-palette';
+                color = 'text-amber-400 bg-amber-500/10 border-amber-500/20';
+                tag = 'Poster Designer';
+            } else if (lower.includes('reel') || lower.includes('mp4') || lower.includes('video')) {
+                icon = 'fa-solid fa-clapperboard';
+                color = 'text-rose-400 bg-rose-500/10 border-rose-500/20';
+                tag = 'Reels & Video Studio';
+            } else if (lower.includes('quote') || lower.includes('suvichar')) {
+                icon = 'fa-solid fa-quote-left';
+                color = 'text-purple-400 bg-purple-500/10 border-purple-500/20';
+                tag = 'Quotes Studio';
+            } else if (type === 'folder') {
+                icon = 'fa-solid fa-folder-open';
+                color = 'text-blue-400 bg-blue-500/10 border-blue-500/20';
+            }
+
+            const encodedUrl = './' + rawPath.split('/').map(p => encodeURIComponent(p)).join('/') + (type === 'folder' ? '/' : '');
+
+            return {
+                id: rawPath,
+                title: cleanTitle,
+                rawPath: rawPath,
+                type: type,
+                url: encodedUrl,
+                githubUrl: `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/blob/main/${rawPath.split('/').map(p => encodeURIComponent(p)).join('/')}`,
+                icon, color, tag
+            };
         }
 
-        function getSmartVisuals(name, type) {
-            const lower = name.toLowerCase();
-            if (lower.includes('poster') || lower.includes('banner') || lower.includes('thumb') || lower.includes('image')) {
-                return { icon: 'fa-solid fa-palette', color: 'text-amber-400 bg-amber-500/10 border-amber-500/20', tag: 'Poster & Design' };
-            }
-            if (lower.includes('reel') || lower.includes('short') || lower.includes('video') || lower.includes('mp4')) {
-                return { icon: 'fa-solid fa-clapperboard', color: 'text-rose-400 bg-rose-500/10 border-rose-500/20', tag: 'Reels & Video Studio' };
-            }
-            if (lower.includes('quote') || lower.includes('suvichar') || lower.includes('text')) {
-                return { icon: 'fa-solid fa-quote-left', color: 'text-purple-400 bg-purple-500/10 border-purple-500/20', tag: 'Quotes & Suvichar' };
-            }
-            if (lower.includes('pdf') || lower.includes('book') || lower.includes('doc')) {
-                return { icon: 'fa-solid fa-file-pdf', color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20', tag: 'PDF Studio' };
-            }
-            if (type === 'folder') {
-                return { icon: 'fa-solid fa-folder-open', color: 'text-blue-400 bg-blue-500/10 border-blue-500/20', tag: 'Folder Project' };
-            }
-            return { icon: 'fa-solid fa-wand-magic-sparkles', color: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20', tag: 'HTML Tool' };
-        }
-
-        // Safely encode file paths with spaces, brackets, etc.
-        function encodeFilePath(fullPath) {
-            return fullPath.split('/').map(part => encodeURIComponent(part)).join('/');
-        }
-
-        async function fetchDir(owner, repo, dirPath = '') {
-            const encodedDir = dirPath ? encodeFilePath(dirPath) : '';
-            const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${encodedDir}`);
-            if (!res.ok) throw new Error(`GitHub API Status: ${res.status}`);
-            return await res.json();
-        }
-
-        async function syncGitHubTools() {
-            const { owner, repo } = getRepoConfig();
-            const loader = document.getElementById('loader');
-            const grid = document.getElementById('toolsGrid');
-            const errorBox = document.getElementById('errorBox');
-            const statusText = document.getElementById('repoStatus');
-            const refreshIcon = document.getElementById('refreshIcon');
-
-            refreshIcon.classList.add('fa-spin');
-            loader.classList.remove('hidden');
-            grid.classList.add('hidden');
-            errorBox.classList.add('hidden');
-            statusText.innerText = `Syncing: ${owner}/${repo}...`;
-
-            try {
-                // 1. Scan Root Folder
-                let rootItems = await fetchDir(owner, repo, '');
-                let allItems = [];
-
-                for (const item of rootItems) {
-                    const lower = item.name.toLowerCase();
-                    // Ignore root index.html and system files
-                    if (['index.html', '404.html', 'readme.md'].includes(lower) || lower.startsWith('.')) continue;
-
-                    // If it's a container folder like "tools", scan inside it!
-                    if (item.type === 'dir' && ['tools', 'projects', 'apps'].includes(lower)) {
-                        const subItems = await fetchDir(owner, repo, item.path);
-                        allItems.push(...subItems);
-                    } else if (item.type === 'dir' || (item.type === 'file' && lower.endsWith('.html'))) {
-                        allItems.push(item);
-                    }
-                }
-
-                discoveredTools = allItems
-                    .filter(item => item.type === 'dir' || (item.type === 'file' && item.name.toLowerCase().endsWith('.html')))
-                    .map(item => {
-                        const isFolder = item.type === 'dir';
-                        const visuals = getSmartVisuals(item.name, isFolder ? 'folder' : 'file');
-                        const safePath = encodeFilePath(item.path);
-                        const launchUrl = isFolder ? `./${safePath}/` : `./${safePath}`;
-
-                        return {
-                            id: item.path,
-                            title: formatSmartTitle(item.name),
-                            rawPath: item.path,
-                            type: isFolder ? 'folder' : 'file',
-                            url: launchUrl,
-                            githubUrl: item.html_url,
-                            ...visuals
-                        };
-                    });
-
-                document.getElementById('toolCountBadge').innerText = `${discoveredTools.length} Tools Live`;
-                statusText.innerText = `Connected: ${owner}/${repo}`;
-                renderTools();
-
-            } catch (err) {
-                console.error(err);
-                document.getElementById('toolCountBadge').innerText = `Sync Error`;
-                document.getElementById('errorText').innerText = `Tools load nahi ho paaye (${err.message}). Check karein ki repo Public hai.`;
-                errorBox.classList.remove('hidden');
-            } finally {
-                loader.classList.add('hidden');
-                refreshIcon.classList.remove('fa-spin');
-            }
-        }
-
+        // 2. Render Cards on Screen
         function renderTools() {
             const grid = document.getElementById('toolsGrid');
             const query = document.getElementById('searchInput').value.toLowerCase();
             grid.innerHTML = '';
 
-            const sorted = [...discoveredTools].sort((a, b) => {
-                const aPin = pinnedTools.includes(a.id) ? 1 : 0;
-                const bPin = pinnedTools.includes(b.id) ? 1 : 0;
-                return bPin - aPin || a.title.localeCompare(b.title);
-            });
-
-            const filtered = sorted.filter(tool => {
-                const matchSearch = tool.title.toLowerCase().includes(query) || tool.rawPath.toLowerCase().includes(query);
+            const filtered = discoveredTools.filter(t => {
+                const matchSearch = t.title.toLowerCase().includes(query) || t.rawPath.toLowerCase().includes(query);
                 if (!matchSearch) return false;
-                if (currentFilter === 'folder') return tool.type === 'folder';
-                if (currentFilter === 'file') return tool.type === 'file';
-                if (currentFilter === 'pinned') return pinnedTools.includes(tool.id);
+                if (currentFilter === 'folder') return t.type === 'folder';
+                if (currentFilter === 'file') return t.type === 'file';
                 return true;
             });
 
-            grid.classList.remove('hidden');
+            document.getElementById('toolCountBadge').innerText = `${discoveredTools.length} Tools Active`;
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 text-sm">Koi tool nahi mila.</div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-10 text-slate-400 text-sm">Koi matching tool nahi mila.</div>`;
                 return;
             }
 
-            filtered.forEach((tool, idx) => {
-                const isPinned = pinnedTools.includes(tool.id);
+            filtered.forEach(tool => {
                 const card = document.createElement('div');
                 card.className = "tool-card glass rounded-2xl p-5 flex flex-col justify-between";
                 card.innerHTML = `
@@ -286,54 +166,86 @@
                             <div class="w-11 h-11 rounded-xl border ${tool.color} flex items-center justify-center text-lg">
                                 <i class="${tool.icon}"></i>
                             </div>
-                            <div class="flex items-center gap-1.5">
-                                <span class="text-[11px] bg-slate-800 text-slate-300 border border-slate-700 px-2.5 py-1 rounded-md font-medium">
-                                    ${tool.tag}
-                                </span>
-                                <button data-pin="${idx}" class="pin-btn w-7 h-7 rounded-md flex items-center justify-center ${isPinned ? 'text-rose-400 bg-rose-500/10' : 'text-slate-500 hover:text-slate-300 bg-slate-800/60'} transition">
-                                    <i class="fa-solid fa-thumbtack text-xs"></i>
-                                </button>
-                            </div>
+                            <span class="text-[11px] bg-slate-800 text-slate-300 border border-slate-700 px-2.5 py-1 rounded-md font-medium">
+                                ${tool.tag}
+                            </span>
                         </div>
                         <h3 class="text-sm sm:text-base font-bold text-white mb-1 break-words">${tool.title}</h3>
-                        <p class="text-[11px] text-slate-400 font-mono truncate mb-3">/${tool.rawPath}</p>
+                        <p class="text-[11px] text-slate-400 font-mono break-all mb-4">/${tool.rawPath}</p>
                     </div>
 
-                    <div class="pt-3 border-t border-slate-800/80 flex items-center gap-2 mt-2">
-                        <button data-run="${idx}" class="run-btn flex-1 bg-blue-600 hover:bg-blue-500 text-white py-2 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-play text-[10px]"></i> Open Tool
+                    <div class="pt-3 border-t border-slate-800 flex items-center gap-2">
+                        <button class="run-btn flex-1 bg-blue-600 hover:bg-blue-500 text-white py-2 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-play text-[10px]"></i> Open Here
                         </button>
-                        <a href="${tool.url}" target="_blank" title="Open in New Tab" class="p-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs transition">
+                        <a href="${tool.url}" target="_blank" class="p-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs transition" title="Open in New Tab">
                             <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </a>
-                        <a href="${tool.githubUrl}" target="_blank" title="View Code" class="p-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-xs transition">
-                            <i class="fa-brands fa-github"></i>
                         </a>
                     </div>
                 `;
-
-                card.querySelector('.pin-btn').addEventListener('click', () => togglePin(tool.id));
                 card.querySelector('.run-btn').addEventListener('click', () => launchInApp(tool.url, tool.title));
                 grid.appendChild(card);
             });
         }
 
-        function togglePin(id) {
-            if (pinnedTools.includes(id)) {
-                pinnedTools = pinnedTools.filter(i => i !== id);
-            } else {
-                pinnedTools.push(id);
+        // 3. Auto-Discovery from GitHub (Single Fast Tree API Call)
+        async function syncFromGitHub() {
+            const refreshIcon = document.getElementById('refreshIcon');
+            const statusText = document.getElementById('repoStatus');
+            refreshIcon.classList.add('fa-spin');
+            statusText.innerText = "Scanning GitHub for new tools...";
+
+            try {
+                // Fetch entire repository file tree in 1 single API call
+                const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/git/trees/main?recursive=1&t=${Date.now()}`);
+                if (!res.ok) throw new Error(`API ${res.status}`);
+                const data = await res.json();
+
+                if (data && Array.isArray(data.tree)) {
+                    const liveTools = [];
+                    const foldersWithIndex = new Set();
+
+                    // Check folders that have their own index.html
+                    data.tree.forEach(item => {
+                        if (item.path !== 'index.html' && item.path.toLowerCase().endsWith('/index.html')) {
+                            const folderPath = item.path.replace(/\/index\.html$/i, '');
+                            foldersWithIndex.add(folderPath);
+                            liveTools.push(makeToolItem(folderPath, 'folder'));
+                        }
+                    });
+
+                    // Check all standalone .html files (inside tools/ or root)
+                    data.tree.forEach(item => {
+                        const p = item.path;
+                        const lower = p.toLowerCase();
+                        if (item.type === 'blob' && lower.endsWith('.html') && p !== 'index.html' && p !== '404.html') {
+                            const parentFolder = p.includes('/') ? p.substring(0, p.lastIndexOf('/')) : '';
+                            if (!foldersWithIndex.has(parentFolder)) {
+                                liveTools.push(makeToolItem(p, 'file'));
+                            }
+                        }
+                    });
+
+                    if (liveTools.length > 0) {
+                        discoveredTools = liveTools;
+                        renderTools();
+                    }
+                    statusText.innerText = `Live Synced • ${discoveredTools.length} Tools Found`;
+                }
+            } catch (e) {
+                console.warn("Using Instant Cache:", e);
+                statusText.innerText = `Instant Mode Active (${discoveredTools.length} Tools)`;
+            } finally {
+                refreshIcon.classList.remove('fa-spin');
             }
-            localStorage.setItem('pinned_creator_tools', JSON.stringify(pinnedTools));
-            renderTools();
         }
 
-        function setFilter(filterType, btnEl) {
-            currentFilter = filterType;
+        function setFilter(type, btn) {
+            currentFilter = type;
             document.querySelectorAll('.tab-btn').forEach(b => {
-                b.className = "tab-btn bg-slate-800/80 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-lg text-xs font-medium transition";
+                b.className = "tab-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-1.5 rounded-lg text-xs font-medium transition";
             });
-            btnEl.className = "tab-btn bg-blue-600 text-white px-4 py-1.5 rounded-lg text-xs font-medium transition";
+            btn.className = "tab-btn bg-blue-600 text-white px-4 py-1.5 rounded-lg text-xs font-medium transition";
             renderTools();
         }
 
@@ -348,4 +260,16 @@
 
         function closeAppRunner() {
             const modal = document.getElementById('appRunnerModal');
-            modal.c
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.getElementById('appIframe').src = 'about:blank';
+        }
+
+        document.getElementById('searchInput').addEventListener('input', renderTools);
+
+        // Render immediately on open, then check GitHub for any new files!
+        renderTools();
+        syncFromGitHub();
+    </script>
+</body>
+</html>
