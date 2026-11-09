@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sad Verse - Bulk Studio v4 (100% Unique Background Edition)</title>
+    <title>Sad Verse - Bulk Studio v5 (Silent Recording & Video ZIP Edition)</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@600;700;800;900&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
@@ -14,6 +14,7 @@
             --accent: #ff0055;
             --gold: #f5c518;
             --green: #00e676;
+            --purple: #7928ca;
             --text: #ffffff;
         }
         * { box-sizing: border-box; }
@@ -25,7 +26,7 @@
             padding: 10px;
         }
         .studio-container {
-            max-width: 750px;
+            max-width: 760px;
             margin: auto;
             background: var(--card);
             padding: 16px;
@@ -108,7 +109,7 @@
         }
         button {
             flex: 1;
-            min-width: 130px;
+            min-width: 135px;
             padding: 12px;
             border-radius: 10px;
             border: none;
@@ -120,8 +121,9 @@
         }
         .btn-main { background: linear-gradient(135deg, #ff0055, #ff4081); color: #fff; }
         .btn-video { background: linear-gradient(135deg, #7928ca, #ff0080); color: #fff; }
-        .btn-zip { background: var(--gold); color: #000; }
-        .btn-clear { background: #2c2c44; color: #ddd; flex: 0.4; min-width: 90px; }
+        .btn-zip-img { background: var(--gold); color: #000; }
+        .btn-zip-vid { background: var(--green); color: #000; }
+        .btn-zip-all { background: linear-gradient(135deg, #00c6ff, #0072ff); color: #fff; }
         button:disabled { opacity: 0.5; cursor: not-allowed; }
         .hint {
             background: #1e1e32;
@@ -195,13 +197,13 @@
 <body>
 
 <div class="studio-container">
-    <h2>💔 Sad Verse Bulk Studio v4 (No-Repeat AI Edition)</h2>
-    <div class="sub">Every Shayari Gets a 100% Unique Background • Never Repeats Used Photos • 3D Title Header</div>
+    <h2>💔 Sad Verse Bulk Studio v5</h2>
+    <div class="sub">Silent Audio Recording • Video ZIP & All-in-One ZIP Export • 100% Unique Photos</div>
 
     <div class="status-badge">
-        <span>🛡️ <b>Anti-Cancel Guard:</b> <span id="wakeStatus" class="badge-active">Ready</span></span>
+        <span>🔇 <b>Video Audio:</b> <span class="badge-active">Silent Recording (No Speaker Noise)</span></span>
         <span>🚫 <b>Used Photo Memory:</b> <span id="usedCountBadge" class="badge-active">0 Blocked</span></span>
-        <button onclick="resetUsedPhotoMemory()" style="padding:4px 8px; font-size:11px; min-width:auto; flex:0; background:#32324d; color:#fff;">🔄 फोटो मेमोरी रीसेट करें</button>
+        <button onclick="resetUsedPhotoMemory()" style="padding:4px 8px; font-size:11px; min-width:auto; flex:0; background:#32324d; color:#fff;">🔄 फोटो मेमोरी रीसेट</button>
     </div>
 
     <div class="grid-2">
@@ -217,8 +219,8 @@
             <label>2. यूनिक बैकग्राउंड इंजन (Unique Photo Mode):</label>
             <select id="engineType">
                 <option value="unique_hd_pool">⚡ Instant Non-Repeat HD Pool (हर बार नई फोटो - 0 Sec Wait)</option>
-                <option value="fresh_ai_unique">🤖 Live Fresh AI Generator (हर शायरी की नई AI फोटो + No-Limit Delay)</option>
-                <option value="smart_mix">🔥 Smart AI + Non-Repeat HD Mix (Fast + Unique)</option>
+                <option value="fresh_ai_unique">🤖 Live Fresh AI Generator (हर शायरी की नई AI फोटो)</option>
+                <option value="smart_mix">🔥 Smart AI + Non-Repeat HD Mix</option>
             </select>
         </div>
     </div>
@@ -253,8 +255,8 @@
 
     <label>3. अपनी शायरियाँ / सुविचार यहाँ डालें (Bulk Input):</label>
     <div class="hint">
-        ✅ <b>100% अलग बैकग्राउंड गारंटी:</b> हर शायरी के शब्दों के हिसाब से अलग फोटो बनेगी और जो फोटो एक बार बन गई वह दोबारा किसी दूसरी पोस्ट में इस्तेमाल नहीं होगी।<br>
-        ✅ <code>टाइटल | शायरी</code> लिखें ताकि ऊपर टाइटल छपे और उसी नाम से इमेज व वीडियो सेव हो।
+        ✅ <b>Silent Music Recording:</b> वीडियो बनते समय गाना बाहर स्पीकर पर नहीं बजेगा, लेकिन वीडियो फाइल के अंदर एकदम साफ रिकॉर्ड होगा।<br>
+        ✅ <b>Video ZIP Export:</b> वीडियो बनने के बाद आप सारी Videos और Images को एक साथ ZIP फाइल में डाउनलोड कर सकते हैं।
     </div>
 
     <textarea id="shayariInput" oninput="saveInputDraft()">संघर्ष | जब जेब खाली होती है तो अपने भी नजरें बदल लेते हैं, इसलिए जिंदगी में इतना काबिल बनो कि तुम्हारी पहचान तुम्हारी मेहनत से हो, किसी की मेहरबानी से नहीं।
@@ -266,7 +268,7 @@
 बिखरना | जिंदगी में [कभी कभी] बहुत कुछ एक साथ [बिखर] जाता है, रिश्ते भी सपने भी और अपने भी..!!</textarea>
 
     <div class="section-box video-theme">
-        <h4>🎬 Bulk Video Maker + Custom Effects Control (On / Off)</h4>
+        <h4>🎬 Bulk Video Maker + Custom Effects Control (Silent Recording)</h4>
         <div class="grid-2">
             <div>
                 <label style="margin-top:0;">🎵 अपना कस्टम गाना चुनें (MP3/Audio):</label>
@@ -304,10 +306,17 @@
         </div>
     </div>
 
+    <!-- Main Generation Buttons -->
     <div class="btn-row">
         <button class="btn-main" id="genImgBtn" onclick="startBulkImages()">🖼️ 1. Unique Bulk इमेज बनाएं</button>
-        <button class="btn-video" id="genVidBtn" onclick="convertAllToVideos()">🎬 2. सभी की Video बनाएं</button>
-        <button class="btn-zip" id="zipBtn" onclick="downloadAllImagesZip()" style="display:none;">📦 Download ZIP</button>
+        <button class="btn-video" id="genVidBtn" onclick="convertAllToVideos()">🎬 2. सभी की Video बनाएं (Silent)</button>
+    </div>
+
+    <!-- ZIP Export Buttons (Images Only / Videos Only / Both) -->
+    <div class="btn-row" id="zipButtonsRow" style="display:none;">
+        <button class="btn-zip-img" id="zipImgBtn" onclick="downloadZipArchive('images')">📦 Download Images ZIP (.png)</button>
+        <button class="btn-zip-vid" id="zipVidBtn" onclick="downloadZipArchive('videos')" style="display:none;">🎬 Download Videos ZIP</button>
+        <button class="btn-zip-all" id="zipAllBtn" onclick="downloadZipArchive('both')" style="display:none;">🗂️ Download All ZIP (Images + Videos)</button>
     </div>
 
     <div id="progressText"></div>
@@ -316,7 +325,7 @@
 
 <script>
 // =====================================================
-// 1. MASSIVE NON-REPEATING HD EMOTIONAL PHOTO POOL (65+ UNIQUE IDS)
+// 1. MASSIVE NON-REPEATING HD EMOTIONAL PHOTO POOL
 // =====================================================
 const massiveEmotionalPool = {
     struggle_pain: [
@@ -375,7 +384,6 @@ const massiveEmotionalPool = {
     ]
 };
 
-// Dynamic AI Scene Builders (So every single Shayari gets a totally different AI scene)
 const aiSceneModifiers = [
     "lone person sitting on wet stone steps under a dim streetlamp in heavy rain",
     "close up of a hand touching a rain-streaked glass window at midnight with blurry city lights",
@@ -399,15 +407,12 @@ let generatedItems = [];
 let usedPhotoRegistry = new Set();
 
 // =====================================================
-// 2. USED PHOTO TRACKER (NEVER REPEAT ANY BACKGROUND)
+// 2. USED PHOTO MEMORY TRACKER
 // =====================================================
 function loadUsedPhotoMemory() {
     try {
-        const raw = localStorage.getItem("sad_verse_used_photos_v4");
-        if (raw) {
-            const arr = JSON.parse(raw);
-            usedPhotoRegistry = new Set(arr);
-        }
+        const raw = localStorage.getItem("sad_verse_used_photos_v5");
+        if (raw) usedPhotoRegistry = new Set(JSON.parse(raw));
     } catch (e) {
         usedPhotoRegistry = new Set();
     }
@@ -418,16 +423,16 @@ function markPhotoAsUsed(url) {
     if (!url) return;
     usedPhotoRegistry.add(url);
     try {
-        localStorage.setItem("sad_verse_used_photos_v4", JSON.stringify([...usedPhotoRegistry]));
+        localStorage.setItem("sad_verse_used_photos_v5", JSON.stringify([...usedPhotoRegistry]));
     } catch (e) {}
     updateUsedBadge();
 }
 
 function resetUsedPhotoMemory() {
     usedPhotoRegistry.clear();
-    localStorage.removeItem("sad_verse_used_photos_v4");
+    localStorage.removeItem("sad_verse_used_photos_v5");
     updateUsedBadge();
-    document.getElementById("progressText").innerText = "🔄 फोटो मेमोरी रीसेट हो गई! अब सभी तस्वीरें नए सिरे से शफल होंगी।";
+    document.getElementById("progressText").innerText = "🔄 फोटो मेमोरी रीसेट हो गई!";
 }
 
 function updateUsedBadge() {
@@ -436,52 +441,39 @@ function updateUsedBadge() {
 }
 
 function saveInputDraft() {
-    localStorage.setItem("sad_verse_draft_v4", document.getElementById("shayariInput").value);
+    localStorage.setItem("sad_verse_draft_v5", document.getElementById("shayariInput").value);
 }
 
 window.addEventListener("load", () => {
     loadUsedPhotoMemory();
-    const saved = localStorage.getItem("sad_verse_draft_v4");
+    const saved = localStorage.getItem("sad_verse_draft_v5");
     if (saved) document.getElementById("shayariInput").value = saved;
 });
 
 // =====================================================
-// 3. SHAYARI EMOTION TO UNIQUE NON-REPEATING PHOTO
+// 3. UNIQUE BACKGROUND FETCHER
 // =====================================================
 function detectCategoryFromShayari(text) {
-    const t = text;
-    if (['बिखर', 'दर्द', 'संघर्ष', 'जेब', 'खाली', 'मौत', 'टूट', 'बर्बाद', 'जख्म', 'मेहनत'].some(w => t.includes(w))) {
-        return 'struggle_pain';
-    }
-    if (['आँसू', 'रो', 'बारिश', 'रात', 'अंधेरा', 'खामोश', 'तन्हाई', 'चाँद'].some(w => t.includes(w))) {
-        return 'rain_night';
-    }
-    if (['अकेले', 'अकेला', 'तन्हा', 'रास्ता', 'सफर', 'उसूल', 'दुनिया', 'लोग'].some(w => t.includes(w))) {
-        return 'lonely_road';
-    }
+    if (['बिखर', 'दर्द', 'संघर्ष', 'जेब', 'खाली', 'मौत', 'टूट', 'बर्बाद', 'जख्म', 'मेहनत'].some(w => text.includes(w))) return 'struggle_pain';
+    if (['आँसू', 'रो', 'बारिश', 'रात', 'अंधेरा', 'खामोश', 'तन्हाई', 'चाँद'].some(w => text.includes(w))) return 'rain_night';
+    if (['अकेले', 'अकेला', 'तन्हा', 'रास्ता', 'सफर', 'उसूल', 'दुनिया', 'लोग'].some(w => text.includes(w))) return 'lonely_road';
     return 'memories_heart';
 }
 
 function buildUniqueAIPromptForShayari(shayariText, index) {
     const cat = detectCategoryFromShayari(shayariText);
-    // Pick a unique scene modifier based on text length + index + timestamp so no two prompts match
     const hash = (shayariText.length * 13 + index * 7 + usedPhotoRegistry.size) % aiSceneModifiers.length;
     const baseScene = aiSceneModifiers[hash];
-
     let moodDetail = "deep emotional sorrow, dark moody cinematic lighting";
     if (cat === "struggle_pain") moodDetail = "tragic emotional struggle, dramatic shadows, dark moody";
-    if (cat === "rain_night") moodDetail = "heavy rain at night, melancholic reflections, dark blue and amber tones";
+    if (cat === "rain_night") moodDetail = "heavy rain at night, melancholic reflections, dark blue tones";
     if (cat === "lonely_road") moodDetail = "solitude and loneliness, misty atmospheric depth, cinematic";
-
     return `Cinematic vertical photography, ${baseScene}, ${moodDetail}, photorealistic, 8k, no text, no watermark`;
 }
 
-// Picks a 100% UNUSED photo from the pool (Shuffles and checks usedPhotoRegistry)
 function pickUnusedPoolUrl(shayariText) {
     const preferredCat = detectCategoryFromShayari(shayariText);
     const catList = [...(massiveEmotionalPool[preferredCat] || [])];
-
-    // Also gather all other categories as secondary pool so we never run out
     const allUrls = [
         ...catList,
         ...massiveEmotionalPool.struggle_pain,
@@ -490,30 +482,26 @@ function pickUnusedPoolUrl(shayariText) {
         ...massiveEmotionalPool.memories_heart
     ];
 
-    // Shuffle preferred category first
     const unusedPreferred = catList.filter(u => !usedPhotoRegistry.has(u));
     if (unusedPreferred.length > 0) {
-        const randomPick = unusedPreferred[Math.floor(Math.random() * unusedPreferred.length)];
-        markPhotoAsUsed(randomPick);
-        return randomPick;
+        const pick = unusedPreferred[Math.floor(Math.random() * unusedPreferred.length)];
+        markPhotoAsUsed(pick);
+        return pick;
     }
 
-    // Check remaining global pool
     const unusedGlobal = allUrls.filter(u => !usedPhotoRegistry.has(u));
     if (unusedGlobal.length > 0) {
-        const randomPick = unusedGlobal[Math.floor(Math.random() * unusedGlobal.length)];
-        markPhotoAsUsed(randomPick);
-        return randomPick;
+        const pick = unusedGlobal[Math.floor(Math.random() * unusedGlobal.length)];
+        markPhotoAsUsed(pick);
+        return pick;
     }
 
-    // If user generated more than 65 posts and exhausted all, auto-clear memory and pick fresh random
     usedPhotoRegistry.clear();
     const freshPick = allUrls[Math.floor(Math.random() * allUrls.length)];
     markPhotoAsUsed(freshPick);
     return freshPick;
 }
 
-// Detects Pollinations yellow "Free limit reached" banner
 function isRateLimitYellowBanner(img) {
     try {
         const c = document.createElement("canvas");
@@ -527,10 +515,8 @@ function isRateLimitYellowBanner(img) {
 }
 
 async function fetchUniqueBackgroundForShayari(shayariText, index, engineMode, progressEl) {
-    // Mode A: Live Fresh AI Generator (with rate-limit spacing + unique seed)
     if (engineMode === "fresh_ai_unique" || (engineMode === "smart_mix" && index % 2 === 1)) {
         if (engineMode === "fresh_ai_unique" && index > 1) {
-            // 3.5 second delay between AI requests so Pollinations generates fresh image without yellow limit banner
             for (let s = 3; s >= 1; s--) {
                 progressEl.innerText = `🤖 पोस्ट #${index} के लिए नई AI इमेज बन रही है (${s}s)...`;
                 await new Promise(r => setTimeout(r, 1000));
@@ -547,10 +533,8 @@ async function fetchUniqueBackgroundForShayari(shayariText, index, engineMode, p
         }
     }
 
-    // Mode B: Instant Non-Repeat HD Pool (Guaranteed never-used URL)
     const unusedUrl = pickUnusedPoolUrl(shayariText);
-    const hdImg = await loadImgWithTimeout(unusedUrl, 8000);
-    return hdImg;
+    return await loadImgWithTimeout(unusedUrl, 8000);
 }
 
 function loadImgWithTimeout(url, timeoutMs) {
@@ -827,7 +811,7 @@ function drawOverlayEffects(ctx, particles, pType, minY, maxY) {
 }
 
 // =====================================================
-// 5. BULK GENERATION WITH 100% UNIQUE PHOTO GUARANTEE
+// 5. BULK IMAGE GENERATION
 // =====================================================
 async function startBulkImages() {
     const blocks = parseShayariBlocks();
@@ -838,6 +822,8 @@ async function startBulkImages() {
 
     generatedItems = [];
     document.getElementById("gallery").innerHTML = "";
+    document.getElementById("zipVidBtn").style.display = "none";
+    document.getElementById("zipAllBtn").style.display = "none";
     genBtn.disabled = true;
 
     const options = {
@@ -872,6 +858,8 @@ async function startBulkImages() {
             imageName: `${b.title}.png`,
             dataUrl: dataUrl,
             bgSrc: bgImg ? bgImg.src : null,
+            videoBlob: null,
+            videoFileName: null,
             options: options
         };
 
@@ -882,7 +870,7 @@ async function startBulkImages() {
     genBtn.disabled = false;
     progressEl.innerText = `✅ सभी ${generatedItems.length} पोस्ट 100% अलग (Unique) बैकग्राउंड के साथ तैयार हैं!`;
     if (generatedItems.length > 0) {
-        document.getElementById("zipBtn").style.display = "inline-block";
+        document.getElementById("zipButtonsRow").style.display = "flex";
     }
 }
 
@@ -905,7 +893,7 @@ function appendCardToGallery(item) {
 }
 
 // =====================================================
-// 6. VIDEO CONVERTER (MANUAL DOWNLOAD + CUSTOM EFFECTS)
+// 6. SILENT VIDEO CONVERTER + VIDEO BLOB STORAGE FOR ZIP
 // =====================================================
 async function convertAllToVideos() {
     if (generatedItems.length === 0) {
@@ -917,21 +905,32 @@ async function convertAllToVideos() {
 
     for (let i = 0; i < generatedItems.length; i++) {
         const item = generatedItems[i];
-        progressEl.innerText = `🎬 वीडियो तैयार हो रही है (${i + 1}/${generatedItems.length}): "${item.title}"...`;
+        progressEl.innerText = `🔇 साइलेंट मोड में वीडियो रिकॉर्ड हो रही है (${i + 1}/${generatedItems.length}): "${item.title}"...`;
         await recordCanvasVideoForItem(item);
     }
 
     vidBtn.disabled = false;
-    progressEl.innerText = `🎉 सभी वीडियो तैयार हैं! अब कार्ड के हरे "⬇️ Download Video" बटन से डाउनलोड करें।`;
+    updateVideoZipButtonsVisibility();
+    progressEl.innerText = `🎉 सभी ${generatedItems.length} वीडियो तैयार हैं! अब आप नीचे "🎬 Download Videos ZIP" या "🗂️ Download All ZIP" से एक साथ डाउनलोड कर सकते हैं।`;
 }
 
 async function convertSingleItemToVideo(id) {
     const item = generatedItems.find(x => x.id === id);
     if (!item) return;
     const progressEl = document.getElementById("progressText");
-    progressEl.innerText = `🎬 "${item.title}" की वीडियो बन रही है...`;
+    progressEl.innerText = `🔇 साइलेंट मोड में "${item.title}" की वीडियो बन रही है...`;
     await recordCanvasVideoForItem(item);
+    updateVideoZipButtonsVisibility();
     progressEl.innerText = `✅ "${item.title}" की वीडियो तैयार है!`;
+}
+
+function updateVideoZipButtonsVisibility() {
+    const hasAnyVideo = generatedItems.some(item => item.videoBlob !== null);
+    if (hasAnyVideo) {
+        document.getElementById("zipButtonsRow").style.display = "flex";
+        document.getElementById("zipVidBtn").style.display = "inline-block";
+        document.getElementById("zipAllBtn").style.display = "inline-block";
+    }
 }
 
 async function recordCanvasVideoForItem(item) {
@@ -953,6 +952,7 @@ async function recordCanvasVideoForItem(item) {
     const canvasStream = canvas.captureStream(30);
     let combinedTracks = [...canvasStream.getVideoTracks()];
 
+    // SILENT AUDIO RECORDING: Routes audio ONLY into MediaStreamDestination, NOT to speakers!
     let audioEl = null;
     let audioCtx = null;
     if (audioInput.files && audioInput.files[0]) {
@@ -964,97 +964,26 @@ async function recordCanvasVideoForItem(item) {
             audioCtx = new AudioContextClass();
             const source = audioCtx.createMediaElementSource(audioEl);
             const dest = audioCtx.createMediaStreamDestination();
+
+            // Connect ONLY to recording stream destination (No speaker connection!)
             source.connect(dest);
-            source.connect(audioCtx.destination);
+
             if (dest.stream.getAudioTracks().length > 0) {
                 combinedTracks.push(dest.stream.getAudioTracks()[0]);
             }
             await audioEl.play();
-        } catch (e) {}
+        } catch (e) {
+            console.warn("Silent audio routing warning:", e);
+        }
     }
 
     const finalStream = new MediaStream(combinedTracks);
     let mimeType = "video/webm;codecs=vp8,opus";
     let ext = "webm";
-    if (MediaRecorder.isTypeSupported("video/mp4")) { mimeType = "video/mp4"; ext = "mp4"; }
-
-    const recorder = new MediaRecorder(finalStream, { mimeType, videoBitsPerSecond: 4500000 });
-    const chunks = [];
-    recorder.ondataavailable = (e) => { if (e.data && e.data.size > 0) chunks.push(e.data); };
-
-    const minY = (item.options.mode === "white_split") ? 940 : 0;
-    const count = (pType === "rain") ? 65 : (pType === "off" ? 0 : 38);
-    const particles = Array.from({ length: count }, () => ({
-        x: Math.random() * 1080,
-        y: minY + Math.random() * (1920 - minY),
-        r: Math.random() * 4.5 + 1.5,
-        speedY: (pType === "rain") ? (Math.random() * 14 + 12) : (pType === "snow" ? (Math.random() * 2.2 + 1) : -(Math.random() * 1.3 + 0.4)),
-        alpha: Math.random() * 0.45 + 0.18
-    }));
-
-    return new Promise((resolve) => {
-        recorder.onstop = () => {
-            if (audioEl) { audioEl.pause(); audioEl.src = ""; }
-            if (audioCtx) audioCtx.close().catch(() => {});
-
-            const blob = new Blob(chunks, { type: mimeType });
-            const vidUrl = URL.createObjectURL(blob);
-            const videoFileName = `${item.title}.${ext}`;
-
-            const wrap = document.getElementById(`media_wrap_${item.id}`);
-            if (wrap) wrap.innerHTML = `<video src="${vidUrl}" controls loop playsinline></video>`;
-
-            const actions = document.getElementById(`actions_${item.id}`);
-            if (actions) {
-                actions.innerHTML = `
-                    <a class="dl-btn" href="${item.dataUrl}" download="${item.imageName}">⬇️ Image</a>
-                    <a class="dl-btn vid-ready" href="${vidUrl}" download="${videoFileName}">⬇️ Download Video</a>
-                `;
-            }
-            resolve();
-        };
-
-        recorder.start();
-        const fps = 30, totalFrames = durationSec * fps;
-        let frame = 0;
-
-        const interval = setInterval(() => {
-            frame++;
-            const progress = frame / totalFrames;
-            let zoom = 1.0;
-            if (zoomMode === "zoom_in") zoom = 1.0 + progress * 0.14;
-            else if (zoomMode === "zoom_out") zoom = 1.14 - progress * 0.14;
-
-            particles.forEach(p => {
-                p.y += p.speedY;
-                if (pType === "rain") p.x -= 2.5;
-                if (p.y < minY) p.y = 1915;
-                if (p.y > 1920) { p.y = minY; p.x = Math.random() * 1080; }
-            });
-
-            drawCompletePostFrame(ctx, bgImg, item.displayTitle, item.shayari, item.options, zoom, particles, pType);
-
-            if (frame >= totalFrames) {
-                clearInterval(interval);
-                recorder.stop();
-            }
-        }, 1000 / fps);
-    });
-}
-
-async function downloadAllImagesZip() {
-    if (generatedItems.length === 0) return;
-    const zip = new JSZip();
-    generatedItems.forEach(item => {
-        zip.file(item.imageName, item.dataUrl.split(",")[1], { base64: true });
-    });
-    const blob = await zip.generateAsync({ type: "blob" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "Sad_Verse_Unique_Posts.zip";
-    a.click();
-}
-</script>
-
-</body>
-</html>
+    if (MediaRecorder.isTypeSupported("video/mp4")) {
+        mimeType = "video/mp4";
+        ext = "mp4";
+    } else if (MediaRecorder.isTypeSupported("video/webm;codecs=vp9")) {
+        mimeType = "video/webm;codecs=vp9";
+    } else if (!MediaRecorder.isTypeSupported(mimeType)) {
+        mimeType = "video/webm";
