@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sad Verse - Bulk AI Studio</title>
+    <!-- Google Fonts for Hindi Bold & Italic Styling -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@600;800;900&family=Poppins:ital,wght@0,600;0,800;1,700&display=swap" rel="stylesheet">
+    <!-- JSZip for One-Click Bulk ZIP Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        :root {
+            --bg: #0b0b10;
+            --card: #161622;
+            --accent: #ff0055;
+            --gold: #f5c518;
+            --text: #ffffff;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 12px;
+        }
+        .studio-box {
+            max-width: 650px;
+            margin: auto;
+            background: var(--card);
+            padding: 18px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.7);
+            border: 1px solid #28283e;
+        }
+        h2 {
+            text-align: center;
+            margin: 0 0 5px 0;
+            color: var(--accent);
+            font-size: 22px;
+        }
+        .sub {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 16px;
+        }
+        label {
+            font-size: 13px;
+            color: #ccc;
+            display: block;
+            margin-top: 12px;
+            font-weight: 600;
+        }
+        select, textarea, input[type="text"], input[type="color"] {
+            width: 100%;
+            margin-top: 6px;
+            padding: 11px;
+            border-radius: 10px;
+            border: 1px solid #32324d;
+            background: #1f1f30;
+            color: #fff;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        textarea {
+            height: 170px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        button {
+            flex: 1;
+            padding: 13px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 800;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        .btn-generate {
+            background: linear-gradient(135deg, #ff0055, #ff4081);
+            color: #fff;
+        }
+        .btn-zip {
+            background: var(--gold);
+            color: #000;
+            display: none;
+        }
+        button:active { transform: scale(0.98); }
+        .hint {
+            background: #212135;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #bbb;
+            margin-top: 10px;
+            border-left: 3px solid var(--accent);
+        }
+        #status {
+            text-align: center;
+            margin-top: 14px;
+            font-size: 14px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+        #gallery {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .post-card {
+            background: #202032;
+            padding: 8px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #2e2e48;
+        }
+        .post-card img {
+            width: 100%;
+            aspect-ratio: 9/16;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #000;
+        }
+        .dl-link {
+            display: block;
+            margin-top: 8px;
+            padding: 8px;
+            background: #ff0055;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="studio-box">
+    <h2>💔 Sad Verse Bulk AI Studio</h2>
+    <div class="sub">Smart Emotion-to-Background + Auto Highlight Shayari Maker (1080x1920)</div>
+
+    <label>1. डिज़ाइन मोड चुनें (Select Mode):</label>
+    <select id="designMode">
+        <option value="white_split">1. Viral White Split (ऊपर सफेद + पिंक/ब्लैक शायरी + नीचे AI फोटो)</option>
+        <option value="dark_full">2. Dark Cinematic Full Post (पूरी डार्क AI फोटो + बीच में शायरी)</option>
+        <option value="bg_only">3. Background Only (सिर्फ खाली AI बैकग्राउंड - बिना टेक्स्ट के)</option>
+    </select>
+
+    <div class="grid-2">
+        <div>
+            <label>2. बैकग्राउंड का चुनाव (AI Scene):</label>
+            <select id="scenePreset">
+                <option value="auto">✨ Smart Auto (शायरी के हिसाब से खुद चुने)</option>
+                <option value="lifeless">Lifeless Hand & White Sheet (बिखर/दर्द)</option>
+                <option value="rain_walk">Lonely Walk in Rainy Night (बारिश/तन्हाई)</option>
+                <option value="window_rain">Raindrops on Glass Window (उदास खिड़की)</option>
+                <option value="crying_eyes">Teary Sad Eyes Close-up (आँसू/रोना)</option>
+                <option value="empty_bench">Foggy Empty Park Bench (अकेलापन/इंतज़ार)</option>
+                <option value="ocean_sunset">Lonely Silhouette at Dark Beach (समुद्र/शाम)</option>
+            </select>
+        </div>
+        <div>
+            <label>3. AI इंजन (Image Source):</label>
+            <select id="engineType">
+                <option value="pollinations">Free AI Realistic (Pollinations Flux)</option>
+                <option value="canvas_art">Instant Offline Moody Art (No Internet Delay)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="grid-3">
+        <div>
+            <label>Highlight Color:</label>
+            <input type="color" id="highlightColor" value="#ff0055">
+        </div>
+        <div>
+            <label>कोने का Emoji:</label>
+            <input type="text" id="cornerEmoji" value="💔">
+        </div>
+        <div>
+            <label>Watermark:</label>
+            <input type="text" id="watermarkText" value="@SadVerse">
+        </div>
+    </div>
+
+    <label>4. अपनी शायरियाँ यहाँ लिखें (Bulk Input):</label>
+    <div class="hint">
+        💡 <b>टिप 1:</b> जिस शब्द को <b>बड़ा और गुलाबी</b> करना हो उसे <b>[ ]</b> में लिखें, जैसे <code>[कभी कभी]</code> और <code>[बिखर]</code> (वरना टूल खुद भी हाईलाइट कर लेगा)।<br>
+        💡 <b>टिप 2:</b> एक साथ कई पोस्ट बनाने के लिए हर दो शायरियों के बीच <b>---</b> लगाएं।
+    </div>
+
+    <textarea id="shayariInput">जिंदगी में
+[कभी कभी]
+बहुत कुछ एक साथ
+[बिखर]
+जाता है, रिश्ते भी
+सपने भी और अपने भी..!!
+---
+खामोश रातों में
+[तन्हाई]
+जब साथ निभाती है,
+तब हर एक पुरानी याद
+[आँसू]
+बनकर बह जाती है..!!
+---
+कुछ अधूरे से
+[सपने]
+आँखों में रह गए,
+हम सबके होकर भी
+[अकेले]
+ही रह गए..!!</textarea>
+
+    <div class="btn-group">
+        <button class="btn-generate" onclick="startBulkGeneration()">🚀 Bulk पोस्ट जनरेट करें</button>
+        <button class="btn-zip" id="zipBtn" onclick="downloadAllAsZip()">📦 Download All (ZIP)</button>
+    </div>
+
+    <div id="status"></div>
+    <div id="gallery"></div>
+</div>
+
+<script>
+// Generated images array for ZIP download
+let generatedFiles = [];
+
+// हिंदी शब्दों से इमोशन पहचान कर अंग्रेजी AI प्रॉम्प्ट बनाने वाला स्मार्ट डिक्शनरी सिस्टम
+const emotionMap = [
+    {
+        keywords: ['बिखर', 'मौत', 'कफन', 'सांस', 'खत्म', 'लाश', 'टूट', 'जख्म', 'दर्द', 'बर्बाद'],
+        prompt: 'dramatic cinematic shot of a lifeless human hand resting on a dark concrete floor partially covered with a crumpled white bedsheet, deep sorrow, tragic mood, soft studio lighting, high contrast, photorealistic, 8k'
+    },
+    {
+        keywords: ['आँसू', 'रो', 'रोना', 'अश्क', 'पलक', 'आँख', 'भीग'],
+        prompt: 'extreme close up of melancholic human eyes filled with glistening tears, dark moody lighting, deep emotional sorrow, cinematic photography, 8k'
+    },
+    {
+        keywords: ['बारिश', 'बरसात', 'रात', 'अंधेरा', 'शाम', 'चाँद', 'खामोश'],
+        prompt: 'cinematic shot of a lonely person walking down a wet cobblestone street in heavy rain at night under dim glowing streetlights, dark moody aesthetic, 8k'
+    },
+    {
+        keywords: ['अकेले', 'अकेला', 'तन्हा', 'तन्हाई', 'रास्ता', 'छोड़', 'सफर', 'दूर'],
+        prompt: 'a lonely silhouette standing alone on a foggy empty road surrounded by bare autumn trees, melancholic grey sky, cinematic composition, 8k'
+    },
+    {
+        keywords: ['याद', 'इंतज़ार', 'वक्त', 'पुराना', 'सपने', 'अधूरे', 'ख्वाब'],
+        prompt: 'raindrops trickling down a dark glass window pane at night with blurry warm city bokeh lights in the background, lonely and nostalgic atmosphere, 8k'
+    },
+    {
+        keywords: ['दिल', 'मोहब्बत', 'प्यार', 'इश्क', 'धोखा', 'बेवफा', 'रिश्ते'],
+        prompt: 'a single withered red rose lying on cold wet stone in the rain, dark moody background, broken love aesthetic, cinematic lighting, 8k'
+    }
+];
+
+// Preset prompts
+const presetPrompts = {
+    lifeless: 'dramatic cinematic shot of a lifeless human hand resting on a dark concrete floor partially covered with a crumpled white sheet, tragic mood, photorealistic, 8k',
+    rain_walk: 'cinematic shot of a lonely person walking in heavy rain at night under dim yellow streetlights, wet street reflections, dark moody, 8k',
+    window_rain: 'moody close up of raindrops on a glass window at night with blurred city lights in background, melancholic vibe, 8k',
+    crying_eyes: 'close up of sad eyes with a single tear rolling down cheek, dark dramatic shadows, emotional photography, 8k',
+    empty_bench: 'an empty wooden park bench in thick morning fog surrounded by fallen autumn leaves, lonely atmosphere, 8k',
+    ocean_sunset: 'a lone person sitting on a dark beach looking at gloomy ocean waves under a dark overcast sunset, melancholic, 8k'
+};
+
+// Auto-highlight dictionary if user doesn't put [ ] brackets
+const autoHighlightWords = ['कभी कभी', 'बिखर', 'तन्हाई', 'आँसू', 'अकेले', 'मोहब्बत', 'खामोश', 'दर्द', 'धोखा', 'अधूरे', 'सपने', 'जिंदगी'];
+
+function detectEmotionPrompt(shayariText, selectedPreset) {
+    if (selectedPreset !== 'auto') {
+        return presetPrompts[selectedPreset];
+    }
+    for (let item of emotionMap) {
+        for (let kw of item.keywords) {
+            if (shayariText.includes(kw)) {
+                return item.prompt;
+            }
+        }
+    }
+    // Default fallback sad prompt
+    return presetPrompts.lifeless;
+}
+
+async function startBulkGeneration() {
+    const rawInput = document.getElementById('shayariInput').value.trim();
+    if (!rawInput) return alert('कृपया कम से कम एक शायरी लिखें!');
+
+    // Split shayaris by --- or double blank lines
+    const blocks = rawInput.split(/---+|\n\s*\n/).map(s => s.trim()).filter(Boolean);
+    const mode = document.getElementById('designMode').value;
+    const preset = document.getElementById('scenePreset').value;
+    const engine = document.getElementById('engineType').value;
+    const hlColor = document.getElementById('highlightColor').value;
+    const emoji = document.getElementById('cornerEmoji').value;
+    const watermark = document.getElementById('watermarkText').value;
+
+    const gallery = document.getElementById('gallery');
+    const status = document.getElementById('status');
+    const zipBtn = document.getElementById('zipBtn');
+
+    gallery.innerHTML = '';
+    generatedFiles = [];
+    zipBtn.style.display = 'none';
+
+    for (let i = 0; i < blocks.length; i++) {
+        const shayari = blocks[i];
+        status.innerText = `⏳ पोस्ट ${i + 1} / ${blocks.length} तैयार हो रही है (AI इमोशन बैकग्राउंड बन रहा है)...`;
+
+        const basePrompt = detectEmotionPrompt(shayari, preset);
+        const dataUrl = await renderSinglePost(shayari, basePrompt, mode, engine, hlColor, emoji, watermark, i + 1);
+
+        const fileName = `sad_verse_${mode}_${i + 1}.png`;
+        generatedFiles.push({ name: fileName, dataUrl: dataUrl });
+
+        const card = document.createElement('div');
+        card.className = 'post-card';
+        card.innerHTML = `
+            <img src="${dataUrl}" alt="Post ${i + 1}">
+            <a class="dl-link" href="${dataUrl}" download="${fileName}">⬇️ डाउनलोड #${i + 1}</a>
+        `;
+        gallery.appendChild(card);
+    }
+
+    status.innerText = `✅ सभी ${blocks.length} HD पोस्ट सफलतापूर्वक तैयार हो गईं!`;
+    if (generatedFiles.length > 1) {
+        zipBtn.style.display = 'block';
+    }
+}
+
+async function renderSinglePost(shayari, prompt, mode, engine, hlColor, emoji, watermark, index) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1920;
+    const ctx = canvas.getContext('2d');
+
+    // Load AI Image or Procedural Fallback
+    let bgImage = null;
+    if (engine === 'pollinations') {
+        const imgH = (mode === 'white_split') ? 1050 : 1920;
+        const seed = Math.floor(Math.random() * 900000) + index * 17;
+        const encoded = encodeURIComponent(prompt + ", no text, no watermark, clean photography");
+        const url = `https://image.pollinations.ai/prompt/${encoded}?width=1080&height=${imgH}&seed=${seed}&nologo=true&model=flux`;
+        bgImage = await loadImageCrossOrigin(url);
+    }
+
+    // ============================================
+    // MODE 1: VIRAL WHITE SPLIT TEMPLATE (Sample Image Style)
+    // ============================================
+    if (mode === 'white_split') {
+        // 1. Fill Pure White Base
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, 1080, 1920);
+
+        // 2. Draw AI Image in Bottom Half (y: 960 to 1920)
+        if (bgImage) {
+            ctx.drawImage(bgImage, 0, 920, 1080, 1000);
+        } else {
+            drawProceduralSadBottom(ctx, 920, 1000);
+        }
+
+        // 3. Smooth White Fade Blending (y: 880 to 1220)
+        const fadeGrad = ctx.createLinearGradient(0, 900, 0, 1220);
+        fadeGrad.addColorStop(0, '#ffffff');
+        fadeGrad.addColorStop(0.35, 'rgba(255, 255, 255, 0.92)');
+        fadeGrad.addColorStop(0.7, 'rgba(255, 255, 255, 0.4)');
+        fadeGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        ctx.fillStyle = fadeGrad;
+        ctx.fillRect(0, 890, 1080, 340);
+
+        // 4. Draw Broken Heart Emoji on Top Right
+        if (emoji.trim() !== '') {
+            ctx.font = '140px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(emoji.trim(), 875, 275);
+        }
+
+        // 5. Render Multi-Size & Pink/Black Styled Hindi Text
+        drawStyledShayari(ctx, shayari, {
+            isWhiteMode: true,
+            normalColor: '#000000',
+            highlightColor: hlColor,
+            startY: 230,
+            maxY: 970
+        });
+
+        // 6. Subtle Watermark at Bottom
+        if (watermark.trim() !== '') {
+            ctx.fillStyle = 'rgba(255,255,255,0.65)';
+            ctx.font = 'bold 28px Poppins, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(watermark.trim(), 540, 1875);
+        }
+    }
+
+    // ============================================
+    // MODE 2: DARK CINEMATIC FULL POST
+    // ============================================
+    else if (mode === 'dark_full') {
+        if (bgImage) {
+            ctx.drawImage(bgImage, 0, 0, 1080, 1920);
+        } else {
+            drawProceduralDarkFull(ctx);
+        }
+
+        // Dark Moody Vignette Overlay so text pops clearly
+        const darkGrad = ctx.createLinearGradient(0, 0, 0, 1920);
+        darkGrad.addColorStop(0, 'rgba(0,0,0,0.65)');
+        darkGrad.addColorStop(0.5, 'rgba(0,0,0,0.55)');
+        darkGrad.addColorStop(1, 'rgba(0,0,0,0.8)');
+        ctx.fillStyle = darkGrad;
+        ctx.fillRect(0, 0, 1080, 1920);
+
+        if (emoji.trim() !== '') {
+            ctx.font = '110px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(emoji.trim(), 540, 420);
+        }
+
+        drawStyledShayari(ctx, shayari, {
+            isWhiteMode: false,
+            normalColor: '#ffffff',
+            highlightColor: hlColor,
+            startY: 560,
+            maxY: 1550
+        });
+
+        if (watermark.trim() !== '') {
+            ctx.fillStyle = 'rgba(255,255,255,0.55)';
+            ctx.font = 'bold 32px Poppins, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(watermark.trim(), 540, 1780);
+        }
+    }
+
+    // ============================================
+    // MODE 3: BACKGROUND ONLY (Clean 9:16 for Video Editing)
+    // ============================================
+    else if (mode === 'bg_only') {
+        if (bgImage) {
+            ctx.drawImage(bgImage, 0, 0, 1080, 1920);
+        } else {
+            drawProceduralDarkFull(ctx);
+        }
+    }
+
+    return canvas.toDataURL('image/png');
+}
+
+// Function to render multi-size & multi-color text like the viral sample image
+function drawStyledShayari(ctx, rawText, config) {
+    let lines = rawText.split('\n').map(l => l.trim()).filter(Boolean);
+
+    // If user didn't use [ ] brackets anywhere, auto-highlight key lines/words
+    const hasBrackets = rawText.includes('[') && rawText.includes(']');
+
+    let parsedLines = lines.map((line, idx) => {
+        // Check if entire line is inside [ ]
+        if (line.startsWith('[') && line.endsWith(']')) {
+            return { text: line.slice(1, -1).trim(), isBigHighlight: true };
+        }
+        // Remove inline brackets and mark as highlight if line is short & emotional
+        if (hasBrackets && line.includes('[')) {
+            return { text: line.replace(/[\[\]]/g, ''), isBigHighlight: true };
+        }
+        // Auto highlight rule if user didn't put brackets (e.g., line 2 and line 4 in 5-6 line shayari)
+        if (!hasBrackets) {
+            for (let hw of autoHighlightWords) {
+                if (line === hw || (line.includes(hw) && line.length <= 14)) {
+                    return { text: line, isBigHighlight: true };
+                }
+            }
+            if ((idx === 1 || idx === 3) && line.length <= 15) {
+                return { text: line, isBigHighlight: true };
+            }
+        }
+        return { text: line, isBigHighlight: false };
+    });
+
+    // Calculate vertical centering in top zone
+    let totalHeight = 0;
+    parsedLines.forEach(item => {
+        totalHeight += item.isBigHighlight ? 145 : 95;
+    });
+
+    let currentY = config.startY;
+    if (config.isWhiteMode) {
+        const availableH = config.maxY - config.startY;
+        if (totalHeight < availableH) {
+            currentY = config.startY + (availableH - totalHeight) / 2;
+        }
+    }
+
+    parsedLines.forEach((item, index) => {
+        ctx.save();
+        if (item.isBigHighlight) {
+            // Large Pink/Magenta Bold Text (Like "कभी कभी" and "बिखर")
+            ctx.fillStyle = config.highlightColor;
+            ctx.font = '900 112px "Noto Sans Devanagari", sans-serif';
+            ctx.textAlign = 'center';
+            currentY += 115;
+            if (!config.isWhiteMode) {
+                ctx.shadowColor = 'rgba(0,0,0,0.85)';
+                ctx.shadowBlur = 18;
+            }
+            ctx.fillText(item.text, 540, currentY);
+            currentY += 35;
+        } else {
+            // Normal Black Italic-Slanted Bold Text
+            ctx.fillStyle = config.normalColor;
+            ctx.font = '800 64px "Noto Sans Devanagari", sans-serif';
+            // First line aligned slightly left like "जिंदगी में" in sample image if white mode & emoji exists
+            if (config.isWhiteMode && index === 0 && item.text.length < 15) {
+                ctx.textAlign = 'left';
+                currentY += 60;
+                ctx.setTransform(1, 0, -0.12, 1, 0, 0); // Subtle italic slant for Devanagari
+                ctx.fillText(item.text, 110, currentY);
+            } else {
+                ctx.textAlign = 'center';
+                currentY += 72;
+                ctx.setTransform(1, 0, -0.10, 1, 0, 0); // Subtle italic slant
+                if (!config.isWhiteMode) {
+                    ctx.shadowColor = 'rgba(0,0,0,0.9)';
+                    ctx.shadowBlur = 14;
+                }
+                ctx.fillText(item.text, 590, currentY);
+            }
+            currentY += 24;
+        }
+        ctx.restore();
+    });
+}
+
+// Helper to load AI image with CORS support and timeout fallback
+function loadImageCrossOrigin(url) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        const timer = setTimeout(() => {
+            resolve(null); // Fallback to offline art if slow
+        }, 18000);
+        img.onload = () => {
+            clearTimeout(timer);
+            resolve(img);
+        };
+        img.onerror = () => {
+            clearTimeout(timer);
+            resolve(null);
+        };
+        img.src = url;
+    });
+}
+
+// Offline Procedural Sad Art (Bottom Half for White Mode)
+function drawProceduralSadBottom(ctx, yStart, height) {
+    const grad = ctx.createLinearGradient(0, yStart, 0, yStart + height);
+    grad.addColorStop(0, '#d9d9d9');
+    grad.addColorStop(0.4, '#4a4a52');
+    grad.addColorStop(1, '#18181c');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, yStart, 1080, height);
+
+    // Rain / Texture lines
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+    ctx.lineWidth = 2;
+    for (let i = 0; i < 90; i++) {
+        const x = Math.random() * 1080;
+        const y = yStart + Math.random() * height;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x - 12, y + 70);
+        ctx.stroke();
+    }
+}
+
+// Offline Procedural Dark Full Background
+function drawProceduralDarkFull(ctx) {
+    const grad = ctx.createLinearGradient(0, 0, 0, 1920);
+    grad.addColorStop(0, '#07070c');
+    grad.addColorStop(0.5, '#151626');
+    grad.addColorStop(1, '#060609');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 1080, 1920);
+
+    for (let i = 0; i < 70; i++) {
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255, 190, 120, ${Math.random() * 0.08})`;
+        ctx.arc(Math.random() * 1080, Math.random() * 1920, Math.random() * 45 + 5, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+// One-Click Bulk ZIP Download
+async function downloadAllAsZip() {
+    if (generatedFiles.length === 0) return;
+    const status = document.getElementById('status');
+    status.innerText = '📦 ZIP फाइल तैयार हो रही है...';
+
+    const zip = new JSZip();
+    generatedFiles.forEach(file => {
+        const base64Data = file.dataUrl.split(',')[1];
+        zip.file(file.name, base64Data, { base64: true });
+    });
+
+    const content = await zip.generateAsync({ type: 'blob' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(content);
+    a.download = 'Sad_Verse_Bulk_Posts.zip';
+    a.click();
+    status.innerText = '✅ ZIP फाइल डाउनलोड हो गई!';
+}
+</script>
+
+</body>
+</html>
