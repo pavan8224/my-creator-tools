@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sad Verse - Bulk Image & Video Pro Studio v2</title>
+    <title>Sad Verse - Bulk Image & Video Pro Studio v3</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@600;700;800;900&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
@@ -109,12 +109,12 @@
         }
         button {
             flex: 1;
-            min-width: 135px;
+            min-width: 130px;
             padding: 12px;
             border-radius: 10px;
             border: none;
             font-weight: 800;
-            font-size: 13.5px;
+            font-size: 13px;
             cursor: pointer;
             transition: 0.2s;
             font-family: inherit;
@@ -122,7 +122,7 @@
         .btn-main { background: linear-gradient(135deg, #ff0055, #ff4081); color: #fff; }
         .btn-video { background: linear-gradient(135deg, #7928ca, #ff0080); color: #fff; }
         .btn-zip { background: var(--gold); color: #000; }
-        .btn-clear { background: #2c2c44; color: #ddd; flex: 0.35; min-width: 85px; }
+        .btn-clear { background: #2c2c44; color: #ddd; flex: 0.35; min-width: 80px; }
         button:disabled { opacity: 0.5; cursor: not-allowed; }
         .hint {
             background: #1e1e32;
@@ -140,16 +140,6 @@
             font-size: 13.5px;
             color: var(--gold);
             font-weight: 700;
-        }
-        #resumeBanner {
-            display: none;
-            background: #133326;
-            border: 1px solid var(--green);
-            padding: 10px;
-            border-radius: 10px;
-            margin-top: 10px;
-            text-align: center;
-            font-size: 13px;
         }
         #gallery {
             margin-top: 16px;
@@ -206,17 +196,12 @@
 <body>
 
 <div class="studio-container">
-    <h2>💔 Sad Verse Bulk Image & Video Studio v2</h2>
-    <div class="sub">3D Outlined Top Title • Center Auto-Wrap • Custom Video Effects (On/Off) • Manual Video Download</div>
+    <h2>💔 Sad Verse Bulk Studio v3 (Fresh Read Fix)</h2>
+    <div class="sub">3D Outlined Top Title • Center Auto-Wrap • Fresh Input Reader</div>
 
     <div class="status-badge">
-        <span>🛡️ <b>Anti-Cancel Guard:</b> <span id="wakeStatus">Ready</span></span>
-        <span>💾 <b>Auto-Save DB:</b> <span class="badge-active">Active</span></span>
-    </div>
-
-    <div id="resumeBanner">
-        ⚡ पिछली अधूरी जनरेशन या सेव की गई पोस्ट मिलीं! 
-        <button onclick="resumePendingGeneration()" style="padding:5px 10px; font-size:12px; min-width:auto; margin-left:8px; background:#00e676; color:#000;">▶️ बाक़ी पोस्ट पूरी करें (Resume)</button>
+        <span>🛡️ <b>Status:</b> <span id="wakeStatus">Ready</span></span>
+        <span>🔄 <b>Input Mode:</b> <span class="badge-active">Live Fresh Read</span></span>
     </div>
 
     <div class="grid-2">
@@ -238,15 +223,14 @@
         </div>
     </div>
 
-    <!-- Top Title & Highlight Styling Box -->
     <div class="section-box">
-        <h4>🎨 Title Header ("भाग्य का साथ" स्टाइल) & Text Styling</h4>
+        <h4>🎨 Title Header & Text Styling</h4>
         <div class="grid-4">
             <div>
                 <label style="margin-top:0;">Show Top Title:</label>
                 <select id="showTopTitle">
-                    <option value="yes" selected>✅ हाँ (पोस्ट के ऊपर दिखाएं)</option>
-                    <option value="no">❌ नहीं (सिर्फ फाइल नाम रखें)</option>
+                    <option value="yes" selected>✅ हाँ</option>
+                    <option value="no">❌ नहीं</option>
                 </select>
             </div>
             <div>
@@ -258,74 +242,74 @@
                 <input type="color" id="highlightColor" value="#ff0055">
             </div>
             <div>
-                <label style="margin-top:0;">Top Emoji / Watermark:</label>
+                <label style="margin-top:0;">Emoji / Watermark:</label>
                 <div style="display:flex; gap:4px;">
-                    <input type="text" id="cornerEmoji" value="💔" style="width:42%; text-align:center;" title="Emoji">
-                    <input type="text" id="watermarkText" value="@SadVerse" style="width:58%;" title="Watermark">
+                    <input type="text" id="cornerEmoji" value="💔" style="width:42%; text-align:center;">
+                    <input type="text" id="watermarkText" value="@SadVerse" style="width:58%;">
                 </div>
             </div>
         </div>
     </div>
 
-    <label>3. अपनी शायरियाँ / सुविचार यहाँ डालें (Bulk Input):</label>
+    <label>3. अपनी नई शायरियाँ / सुविचार यहाँ डालें (Bulk Input):</label>
     <div class="hint">
-        ✅ <b>"भाग्य का साथ" जैसा Top Title:</b> <code>संघर्ष | जब जेब खाली होती है...</code> लिखने पर <b>"संघर्ष"</b> सबसे ऊपर गोल्डन-ऑरेंज रंग और काले बॉर्डर में छपेगा, और फाइल भी <b>संघर्ष.png / संघर्ष.mp4</b> के नाम से डाउनलोड होगी।<br>
-        ✅ <b>Center Auto-Wrap:</b> सारा टेक्स्ट सेंटर में सेट होगा। खास शब्द हाईलाइट करने के लिए <code>[शब्द]</code> लिखें या टूल खुद हाईलाइट कर लेगा।
+        ✅ <b>नया नियम:</b> बॉक्स में पुराना सारा टेक्स्ट हटाकर अपनी <b>नयी शायरियाँ</b> पेस्ट करें। हर शायरी के बीच में <code>---</code> या खाली लाइन छोड़ें।<br>
+        ✅ <code>टाइटल | शायरी</code> फॉर्मेट इस्तेमाल करें ताकि सही नाम से फाइल सेव हो।
     </div>
 
-    <textarea id="shayariInput" oninput="saveInputDraft()">संघर्ष | जब जेब खाली होती है तो अपने भी नजरें बदल लेते हैं, इसलिए जिंदगी में इतना काबिल बनो कि तुम्हारी पहचान तुम्हारी मेहनत से हो, किसी की मेहरबानी से नहीं।
+    <textarea id="shayariInput" oninput="saveInputDraft()">उदासी | रात के सन्नाटे में जब खुद से बात होती है,
+तब समझ आता है कि
+[तन्हाई]
+ही इस दुनिया में सबसे सच्ची मुलाकात होती है।
 
-जिंदगी का उसूल | हर किसी को खुश रखने की कोशिश मत करना, क्योंकि दुनिया में कुछ लोग तुम्हारी खुशी से भी परेशान रहते हैं, अपनी जिंदगी अपने उसूलों पर जीना सीखो।
+टूटे सपने | जो ख्वाब कभी आँखों में सजाए थे,
+वक्त ने उन्हें पल भर में
+[बिखर]
+कर रख दिया।</textarea>
 
-यादें | इंसान साथ रहे यह जरूरी नहीं, कुछ लोग सिर्फ यादों में रहने आते हैं और जिंदगी भर कभी भूले नहीं जाते।
-
-बिखरना | जिंदगी में [कभी कभी] बहुत कुछ एक साथ [बिखर] जाता है, रिश्ते भी सपने भी और अपने भी..!!</textarea>
-
-    <!-- Custom Song & Video Effects Control Box -->
     <div class="section-box video-theme">
-        <h4>🎬 Bulk Video Maker + Custom Effects Control (On / Off)</h4>
+        <h4>🎬 Bulk Video Maker + Effects Control</h4>
         <div class="grid-2">
             <div>
-                <label style="margin-top:0;">🎵 अपना कस्टम गाना चुनें (MP3/Audio):</label>
+                <label style="margin-top:0;">🎵 कस्टम गाना (MP3/Audio):</label>
                 <input type="file" id="customAudioFile" accept="audio/*">
             </div>
             <div>
-                <label style="margin-top:0;">⏱️ हर वीडियो की लंबाई (Duration):</label>
+                <label style="margin-top:0;">⏱️ वीडियो लंबाई:</label>
                 <select id="videoDuration">
-                    <option value="6">6 Seconds (Fast Reel/Short)</option>
-                    <option value="8" selected>8 Seconds (Ideal Short)</option>
+                    <option value="6">6 Seconds</option>
+                    <option value="8" selected>8 Seconds</option>
                     <option value="10">10 Seconds</option>
-                    <option value="12">12 Seconds</option>
                 </select>
             </div>
         </div>
 
         <div class="grid-2" style="margin-top:6px;">
             <div>
-                <label>🔍 Camera Zoom Effect (On/Off):</label>
+                <label>🔍 Zoom Effect:</label>
                 <select id="zoomEffectMode">
-                    <option value="zoom_in" selected>✨ Smooth Slow Zoom-In (अंदर ज़ूम)</option>
-                    <option value="zoom_out">🔎 Smooth Slow Zoom-Out (बाहर ज़ूम)</option>
-                    <option value="off">🚫 OFF (No Zoom - बिल्कुल स्थिर)</option>
+                    <option value="zoom_in" selected>✨ Smooth Zoom-In</option>
+                    <option value="zoom_out">🔎 Smooth Zoom-Out</option>
+                    <option value="off">🚫 OFF (स्थिर)</option>
                 </select>
             </div>
             <div>
-                <label>🌧️ Particle / Rain Effect (On/Off):</label>
+                <label>🌧️ Particle Effect:</label>
                 <select id="particleEffectMode">
-                    <option value="dust" selected>✨ Floating Sad Dust Particles</option>
-                    <option value="rain">🌧️ Falling Rain Drops (बारिश)</option>
-                    <option value="snow">❄️ Soft Falling Snow (बर्फ़)</option>
-                    <option value="off">🚫 OFF (No Effect - एकदम साफ)</option>
+                    <option value="dust" selected>✨ Floating Dust</option>
+                    <option value="rain">🌧️ Falling Rain</option>
+                    <option value="snow">❄️ Falling Snow</option>
+                    <option value="off">🚫 OFF</option>
                 </select>
             </div>
         </div>
     </div>
 
     <div class="btn-row">
-        <button class="btn-main" id="genImgBtn" onclick="startBulkImages(false)">🖼️ 1. Bulk इमेज बनाएं</button>
-        <button class="btn-video" id="genVidBtn" onclick="convertAllToVideos()">🎬 2. सभी की Video बनाएं</button>
-        <button class="btn-zip" id="zipBtn" onclick="downloadAllImagesZip()" style="display:none;">📦 Download Images ZIP</button>
-        <button class="btn-clear" onclick="clearSavedSession()">🗑️ रीसेट</button>
+        <button class="btn-main" id="genImgBtn" onclick="startBulkImages()">🖼️ 1. नयी Bulk इमेज बनाएं</button>
+        <button class="btn-video" id="genVidBtn" onclick="convertAllToVideos()">🎬 2. Video बनाएं</button>
+        <button class="btn-zip" id="zipBtn" onclick="downloadAllImagesZip()" style="display:none;">📦 ZIP Download</button>
+        <button class="btn-clear" onclick="clearAllData()">🗑️ नया रीसेट</button>
     </div>
 
     <div id="progressText"></div>
@@ -333,188 +317,56 @@
 </div>
 
 <script>
-// =====================================================
-// 1. UNLIMITED CURATED HD SAD/EMOTIONAL PHOTO LIBRARY
-// =====================================================
 const unlimitedSadLibrary = {
     struggle_pain: [
         "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1080&q=85",
         "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1080&q=85",
-        "https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?w=1080&q=85",
-        "https://images.unsplash.com/photo-1541199249251-f713e6145474?w=1080&q=85",
-        "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=1080&q=85"
+        "https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?w=1080&q=85"
     ],
     rain_night: [
         "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?w=1080&q=85",
         "https://images.unsplash.com/photo-1428592953211-077101b2021b?w=1080&q=85",
-        "https://images.unsplash.com/photo-1501691223387-dd0500403074?w=1080&q=85",
-        "https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=1080&q=85",
-        "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=1080&q=85"
+        "https://images.unsplash.com/photo-1501691223387-dd0500403074?w=1080&q=85"
     ],
     lonely_road: [
         "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1080&q=85",
-        "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=1080&q=85",
-        "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?w=1080&q=85",
-        "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1080&q=85",
-        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1080&q=85"
+        "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=1080&q=85"
     ],
     memories_heart: [
         "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=1080&q=85",
-        "https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=1080&q=85",
-        "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=1080&q=85",
-        "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1080&q=85"
+        "https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=1080&q=85"
     ]
 };
 
 const emotionKeywords = [
-    {
-        cat: 'struggle_pain',
-        words: ['बिखर', 'दर्द', 'संघर्ष', 'जेब', 'खाली', 'मौत', 'कफन', 'टूट', 'बर्बाद', 'जख्म', 'हालात', 'गरीब', 'मेहनत'],
-        aiPrompt: 'dramatic cinematic shot of a lifeless sad human hand resting on dark floor with white crumpled sheet, deep sorrow, moody lighting, 8k'
-    },
-    {
-        cat: 'rain_night',
-        words: ['आँसू', 'रो', 'बारिश', 'रात', 'अंधेरा', 'खामोश', 'खामोशी', 'भीग', 'अश्क', 'चाँद'],
-        aiPrompt: 'moody close up of raindrops trickling down a dark glass window at night with blurred city lights, melancholic lonely vibe, 8k'
-    },
-    {
-        cat: 'lonely_road',
-        words: ['अकेले', 'अकेला', 'तन्हा', 'तन्हाई', 'रास्ता', 'छोड़', 'उसूल', 'दुनिया', 'मतलबी', 'सफर'],
-        aiPrompt: 'cinematic shot of a lonely person walking alone down a foggy dark street under dim streetlights at night, melancholic mood, 8k'
-    },
-    {
-        cat: 'memories_heart',
-        words: ['याद', 'यादों', 'दिल', 'मोहब्बत', 'प्यार', 'रिश्ते', 'सपने', 'अपने', 'इंतज़ार', 'वक्त', 'भाग्य'],
-        aiPrompt: 'a single withered rose resting on a dark wet wooden bench in the fog, broken heart aesthetic, emotional photography, 8k'
-    }
+    { cat: 'struggle_pain', words: ['बिखर', 'दर्द', 'संघर्ष', 'जेब', 'खाली', 'मौत', 'टूट', 'बर्बाद', 'जख्म'], aiPrompt: 'lifeless hand on floor, dark moody, 8k' },
+    { cat: 'rain_night', words: ['आँसू', 'रो', 'बारिश', 'रात', 'अंधेरा', 'खामोश', 'तन्हाई'], aiPrompt: 'raindrops on window at night, lonely, 8k' },
+    { cat: 'lonely_road', words: ['अकेले', 'अकेला', 'तन्हा', 'रास्ता', 'सफर'], aiPrompt: 'lonely person walking on foggy street, 8k' },
+    { cat: 'memories_heart', words: ['याद', 'दिल', 'मोहब्बत', 'प्यार', 'सपने', 'वक्त', 'उदासी'], aiPrompt: 'withered rose on wet bench, 8k' }
 ];
 
-const importantHighlightWords = [
-    'कभी कभी', 'बिखर', 'जेब खाली', 'नजरें बदल', 'मेहरबानी', 'पहचान',
-    'खुश रखने', 'परेशान', 'उसूलों पर', 'यादों में', 'खामोशी', 'तन्हाई',
-    'आँसू', 'अकेले', 'सपने भी', 'अपने भी', 'मोहब्बत', 'धोखा', 'जरूरत', 'मेहनत'
-];
+const importantHighlightWords = ['तन्हाई', 'बिखर', 'दर्द', 'खामोशी', 'आँसू', 'अकेले', 'सपने', 'मोहब्बत', 'उदासी'];
 
 let generatedItems = [];
 let wakeLockObj = null;
-let keepAliveAudioCtx = null;
-let dbInstance = null;
-
-// =====================================================
-// 2. INDEXED-DB AUTO-SAVE & REFRESH PROTECTION
-// =====================================================
-function initDatabase() {
-    const req = indexedDB.open("SadVerseStudioDB_v2", 1);
-    req.onupgradeneeded = (e) => {
-        const db = e.target.result;
-        if (!db.objectStoreNames.contains("posts")) {
-            db.createObjectStore("posts", { keyPath: "id" });
-        }
-    };
-    req.onsuccess = (e) => {
-        dbInstance = e.target.result;
-        loadSavedSession();
-    };
-}
-
-function savePostToDB(item) {
-    if (!dbInstance) return;
-    const tx = dbInstance.transaction("posts", "readwrite");
-    tx.objectStore("posts").put(item);
-}
-
-function loadSavedSession() {
-    const savedDraft = localStorage.getItem("sad_verse_draft_v2");
-    if (savedDraft) {
-        document.getElementById("shayariInput").value = savedDraft;
-    }
-    if (!dbInstance) return;
-    const tx = dbInstance.transaction("posts", "readonly");
-    const req = tx.objectStore("posts").getAll();
-    req.onsuccess = () => {
-        const items = req.result || [];
-        if (items.length > 0) {
-            generatedItems = items.sort((a, b) => a.id - b.id);
-            renderGalleryFromState();
-            const totalBlocks = parseShayariBlocks().length;
-            if (generatedItems.length < totalBlocks) {
-                document.getElementById("resumeBanner").style.display = "block";
-            }
-        }
-    };
-}
-
-function clearSavedSession() {
-    generatedItems = [];
-    document.getElementById("gallery").innerHTML = "";
-    document.getElementById("resumeBanner").style.display = "none";
-    document.getElementById("zipBtn").style.display = "none";
-    document.getElementById("progressText").innerText = "🗑️ सेशन साफ कर दिया गया।";
-    if (dbInstance) {
-        const tx = dbInstance.transaction("posts", "readwrite");
-        tx.objectStore("posts").clear();
-    }
-}
 
 function saveInputDraft() {
-    localStorage.setItem("sad_verse_draft_v2", document.getElementById("shayariInput").value);
+    localStorage.setItem("sad_verse_draft_v3", document.getElementById("shayariInput").value);
 }
 
-window.addEventListener("load", initDatabase);
-
-// =====================================================
-// 3. WAKE LOCK & BACKGROUND AUDIO KEEP-ALIVE
-// =====================================================
-async function activateAntiCancelGuard() {
-    const statusEl = document.getElementById("wakeStatus");
-    try {
-        if ('wakeLock' in navigator) {
-            wakeLockObj = await navigator.wakeLock.request('screen');
-            statusEl.innerText = "Screen Lock Prevented 🔒";
-            statusEl.className = "badge-active";
-        }
-    } catch (e) {
-        statusEl.innerText = "Background Keep-Alive Active";
-    }
-
-    try {
-        if (!keepAliveAudioCtx) {
-            const AudioContext = window.AudioContext || window.webkitAudioContext;
-            keepAliveAudioCtx = new AudioContext();
-        }
-        if (keepAliveAudioCtx.state === 'suspended') {
-            await keepAliveAudioCtx.resume();
-        }
-        const osc = keepAliveAudioCtx.createOscillator();
-        const gain = keepAliveAudioCtx.createGain();
-        gain.gain.value = 0.0001;
-        osc.connect(gain);
-        gain.connect(keepAliveAudioCtx.destination);
-        osc.start();
-        keepAliveAudioCtx._silentOsc = osc;
-    } catch (err) {}
-}
-
-function releaseAntiCancelGuard() {
-    if (wakeLockObj) {
-        wakeLockObj.release().catch(() => {});
-        wakeLockObj = null;
-    }
-    if (keepAliveAudioCtx && keepAliveAudioCtx._silentOsc) {
-        try { keepAliveAudioCtx._silentOsc.stop(); } catch (e) {}
-    }
-    document.getElementById("wakeStatus").innerText = "Completed ✅";
-}
-
-document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible" && (document.getElementById("genImgBtn").disabled || document.getElementById("genVidBtn").disabled)) {
-        activateAntiCancelGuard();
-    }
+window.addEventListener("load", () => {
+    const saved = localStorage.getItem("sad_verse_draft_v3");
+    if (saved) document.getElementById("shayariInput").value = saved;
 });
 
-// =====================================================
-// 4. PARSE INPUT & EXTRACT "TITLE | SHAYARI"
-// =====================================================
+function clearAllData() {
+    generatedItems = [];
+    document.getElementById("gallery").innerHTML = "";
+    document.getElementById("zipBtn").style.display = "none";
+    document.getElementById("progressText").innerText = "🗑️ सारा पुराना डेटा साफ़ कर दिया गया है। अब नया टेक्स्ट डालें।";
+    localStorage.removeItem("sad_verse_draft_v3");
+}
+
 function parseShayariBlocks() {
     const raw = document.getElementById("shayariInput").value.trim();
     if (!raw) return [];
@@ -534,7 +386,7 @@ function parseShayariBlocks() {
         } else {
             const words = block.replace(/[\[\]\n]/g, " ").trim().split(/\s+/);
             displayTitle = words.slice(0, 2).join(" ") || `सुविचार ${idx + 1}`;
-            fileTitle = words.slice(0, 3).join("_") || `Sad_Verse_${idx + 1}`;
+            fileTitle = words.slice(0, 3).join("_") || `Post_${idx + 1}`;
         }
 
         const safeFileName = fileTitle.replace(/[\\/:*?"<>|]/g, "").trim() || `Post_${idx + 1}`;
@@ -548,70 +400,30 @@ function parseShayariBlocks() {
     });
 }
 
-// =====================================================
-// 5. SMART IMAGE FETCHER
-// =====================================================
 function analyzeEmotion(text, index) {
     for (let item of emotionKeywords) {
         for (let kw of item.words) {
             if (text.includes(kw)) {
                 const list = unlimitedSadLibrary[item.cat];
-                return {
-                    hdUrl: list[index % list.length],
-                    aiPrompt: item.aiPrompt
-                };
+                return list[index % list.length];
             }
         }
     }
-    const fallbackList = unlimitedSadLibrary.struggle_pain;
-    return {
-        hdUrl: fallbackList[index % fallbackList.length],
-        aiPrompt: emotionKeywords[0].aiPrompt
-    };
+    return unlimitedSadLibrary.struggle_pain[0];
 }
 
-function isRateLimitYellowBanner(img) {
-    try {
-        const testCanvas = document.createElement("canvas");
-        testCanvas.width = 60;
-        testCanvas.height = 60;
-        const tCtx = testCanvas.getContext("2d");
-        tCtx.drawImage(img, 0, 0, 60, 60);
-        const data = tCtx.getImageData(30, 45, 1, 1).data;
-        const [r, g, b] = data;
-        if (r > 210 && g > 185 && b < 135) return true;
-    } catch (e) {}
-    return false;
-}
-
-async function fetchSmartBackground(shayariText, index, engineType) {
-    const emotion = analyzeEmotion(shayariText, index);
-    if (engineType === "offline_art") return null;
-
-    if (engineType === "ai_safe") {
-        const seed = Math.floor(Math.random() * 89999) + index * 31;
-        const aiUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(emotion.aiPrompt + ", dark moody, no text")}?width=1080&height=1200&seed=${seed}&nologo=true`;
-        const aiImg = await loadImgWithTimeout(aiUrl, 9000);
-        if (aiImg && !isRateLimitYellowBanner(aiImg)) return aiImg;
-    }
-
-    return await loadImgWithTimeout(emotion.hdUrl, 8000);
-}
-
-function loadImgWithTimeout(url, timeoutMs) {
+async function fetchBackground(text, index) {
+    const url = analyzeEmotion(text, index);
     return new Promise((resolve) => {
         const img = new Image();
         img.crossOrigin = "anonymous";
-        const t = setTimeout(() => resolve(null), timeoutMs);
+        const t = setTimeout(() => resolve(null), 6000);
         img.onload = () => { clearTimeout(t); resolve(img); };
         img.onerror = () => { clearTimeout(t); resolve(null); };
         img.src = url;
     });
 }
 
-// =====================================================
-// 6. "भाग्य का साथ" STYLE 3D OUTLINED TOP TITLE & BODY
-// =====================================================
 function drawOutlinedTopTitle(ctx, titleText, fillColor) {
     if (!titleText) return;
     ctx.save();
@@ -619,23 +431,17 @@ function drawOutlinedTopTitle(ctx, titleText, fillColor) {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.lineJoin = 'round';
-    ctx.miterLimit = 2;
 
-    const x = 540;
-    const y = 125;
-
-    // 3D Drop Shadow Effect
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.35)';
+    const x = 540, y = 125;
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
     ctx.shadowBlur = 6;
     ctx.shadowOffsetX = 3;
     ctx.shadowOffsetY = 5;
 
-    // Thick Black Stroke Border (Like "भाग्य का साथ" sample)
     ctx.lineWidth = 14;
     ctx.strokeStyle = '#000000';
     ctx.strokeText(titleText, x, y, 820);
 
-    // Golden-Orange Inner Fill
     ctx.shadowColor = 'transparent';
     ctx.fillStyle = fillColor || '#ff9900';
     ctx.fillText(titleText, x, y, 820);
@@ -644,7 +450,6 @@ function drawOutlinedTopTitle(ctx, titleText, fillColor) {
 
 function prepareHighlightedLines(ctx, shayariText, maxWidth) {
     let workingText = shayariText.trim();
-
     if (!workingText.includes("[")) {
         let count = 0;
         for (let phrase of importantHighlightWords) {
@@ -663,7 +468,6 @@ function prepareHighlightedLines(ctx, shayariText, maxWidth) {
         .filter(Boolean);
 
     const finalLines = [];
-
     rawSegments.forEach(seg => {
         const isHighlight = seg.startsWith("[") && seg.endsWith("]");
         const cleanText = isHighlight ? seg.slice(1, -1).trim() : seg;
@@ -674,63 +478,41 @@ function prepareHighlightedLines(ctx, shayariText, maxWidth) {
             ctx.font = '800 54px "Noto Sans Devanagari", sans-serif';
             const words = cleanText.split(/\s+/);
             let currentLine = "";
-
             words.forEach(word => {
                 const testLine = currentLine ? currentLine + " " + word : word;
-                const metrics = ctx.measureText(testLine);
-                if (metrics.width > maxWidth && currentLine !== "") {
+                if (ctx.measureText(testLine).width > maxWidth && currentLine !== "") {
                     finalLines.push({ text: currentLine, isBig: false });
                     currentLine = word;
                 } else {
                     currentLine = testLine;
                 }
             });
-            if (currentLine) {
-                finalLines.push({ text: currentLine, isBig: false });
-            }
+            if (currentLine) finalLines.push({ text: currentLine, isBig: false });
         }
     });
-
-    if (!finalLines.some(l => l.isBig) && finalLines.length >= 3) {
-        const mid = Math.floor(finalLines.length / 2);
-        if (finalLines[mid].text.length <= 18) {
-            finalLines[mid].isBig = true;
-        }
-    }
-
     return finalLines;
 }
 
 function drawCompletePostFrame(ctx, bgImg, displayTitle, shayariText, options, zoomFactor = 1.0, particles = [], pType = "dust") {
     const { mode, showTitle, titleColor, hlColor, emoji, watermark } = options;
-
     ctx.clearRect(0, 0, 1080, 1920);
 
-    // ==========================================
-    // MODE 1: VIRAL WHITE SPLIT
-    // ==========================================
     if (mode === "white_split") {
         ctx.fillStyle = "#ffffff";
         ctx.fillRect(0, 0, 1080, 1920);
 
-        // Bottom Image Area with Zoom
         ctx.save();
         ctx.beginPath();
         ctx.rect(0, 930, 1080, 990);
         ctx.clip();
-
         if (bgImg) {
-            const w = 1080 * zoomFactor;
-            const h = 990 * zoomFactor;
-            const dx = (1080 - w) / 2;
-            const dy = 930 + (990 - h) / 2;
-            ctx.drawImage(bgImg, dx, dy, w, h);
+            const w = 1080 * zoomFactor, h = 990 * zoomFactor;
+            ctx.drawImage(bgImg, (1080 - w) / 2, 930 + (990 - h) / 2, w, h);
         } else {
             drawProceduralSadBottom(ctx, 930, 990);
         }
         ctx.restore();
 
-        // Smooth White Gradient Fade
         const fade = ctx.createLinearGradient(0, 890, 0, 1220);
         fade.addColorStop(0, "#ffffff");
         fade.addColorStop(0.4, "rgba(255,255,255,0.92)");
@@ -739,31 +521,21 @@ function drawCompletePostFrame(ctx, bgImg, displayTitle, shayariText, options, z
         ctx.fillStyle = fade;
         ctx.fillRect(0, 890, 1080, 340);
 
-        // Custom Overlay Effects (Dust / Rain / Snow / Off)
         drawOverlayEffects(ctx, particles, pType, 940, 1920);
 
-        // Top Title Header ("भाग्य का साथ" Style)
         let bodyTopY = 210;
         if (showTitle === "yes" && displayTitle) {
             drawOutlinedTopTitle(ctx, displayTitle, titleColor);
             bodyTopY = 235;
         }
 
-        // Top Right Emoji
         if (emoji) {
             ctx.font = "95px sans-serif";
             ctx.textAlign = "center";
             ctx.fillText(emoji, 955, 130);
         }
 
-        // Center-Aligned Body Quote
-        renderCenteredTypography(ctx, shayariText, {
-            isWhite: true,
-            normalColor: "#000000",
-            hlColor: hlColor,
-            topY: bodyTopY,
-            bottomY: 950
-        });
+        renderCenteredTypography(ctx, shayariText, { isWhite: true, normalColor: "#000000", hlColor, topY: bodyTopY, bottomY: 950 });
 
         if (watermark) {
             ctx.fillStyle = "rgba(255,255,255,0.75)";
@@ -771,62 +543,27 @@ function drawCompletePostFrame(ctx, bgImg, displayTitle, shayariText, options, z
             ctx.textAlign = "center";
             ctx.fillText(watermark, 540, 1875);
         }
-    }
-
-    // ==========================================
-    // MODE 2: DARK CINEMATIC FULL POST
-    // ==========================================
-    else if (mode === "dark_full") {
+    } else if (mode === "dark_full") {
         if (bgImg) {
-            const w = 1080 * zoomFactor;
-            const h = 1920 * zoomFactor;
+            const w = 1080 * zoomFactor, h = 1920 * zoomFactor;
             ctx.drawImage(bgImg, (1080 - w) / 2, (1920 - h) / 2, w, h);
         } else {
             drawProceduralSadBottom(ctx, 0, 1920);
         }
-
         const darkOverlay = ctx.createLinearGradient(0, 0, 0, 1920);
         darkOverlay.addColorStop(0, "rgba(0,0,0,0.72)");
-        darkOverlay.addColorStop(0.5, "rgba(0,0,0,0.58)");
         darkOverlay.addColorStop(1, "rgba(0,0,0,0.84)");
         ctx.fillStyle = darkOverlay;
         ctx.fillRect(0, 0, 1080, 1920);
 
         drawOverlayEffects(ctx, particles, pType, 0, 1920);
-
-        if (showTitle === "yes" && displayTitle) {
-            drawOutlinedTopTitle(ctx, displayTitle, titleColor);
-        }
-
-        if (emoji) {
-            ctx.font = "100px sans-serif";
-            ctx.textAlign = "center";
-            ctx.fillText(emoji, 540, 320);
-        }
-
-        renderCenteredTypography(ctx, shayariText, {
-            isWhite: false,
-            normalColor: "#ffffff",
-            hlColor: hlColor,
-            topY: 400,
-            bottomY: 1620
-        });
-
-        if (watermark) {
-            ctx.fillStyle = "rgba(255,255,255,0.65)";
-            ctx.font = "bold 30px Poppins, sans-serif";
-            ctx.textAlign = "center";
-            ctx.fillText(watermark, 540, 1820);
-        }
-    }
-
-    // ==========================================
-    // MODE 3: BACKGROUND ONLY
-    // ==========================================
-    else {
+        if (showTitle === "yes" && displayTitle) drawOutlinedTopTitle(ctx, displayTitle, titleColor);
+        if (emoji) { ctx.font = "100px sans-serif"; ctx.textAlign = "center"; ctx.fillText(emoji, 540, 320); }
+        renderCenteredTypography(ctx, shayariText, { isWhite: false, normalColor: "#ffffff", hlColor, topY: 400, bottomY: 1620 });
+        if (watermark) { ctx.fillStyle = "rgba(255,255,255,0.65)"; ctx.font = "bold 30px Poppins, sans-serif"; ctx.textAlign = "center"; ctx.fillText(watermark, 540, 1820); }
+    } else {
         if (bgImg) {
-            const w = 1080 * zoomFactor;
-            const h = 1920 * zoomFactor;
+            const w = 1080 * zoomFactor, h = 1920 * zoomFactor;
             ctx.drawImage(bgImg, (1080 - w) / 2, (1920 - h) / 2, w, h);
         } else {
             drawProceduralSadBottom(ctx, 0, 1920);
@@ -857,25 +594,18 @@ function renderCenteredTypography(ctx, shayariText, cfg) {
     lines.forEach(item => {
         ctx.save();
         ctx.textAlign = "center";
-
         if (item.isBig) {
             ctx.fillStyle = cfg.hlColor;
             ctx.font = `900 ${bigSize}px "Noto Sans Devanagari", sans-serif`;
             currentY += Math.round(bigLineH * 0.78);
-            if (!cfg.isWhite) {
-                ctx.shadowColor = "rgba(0,0,0,0.9)";
-                ctx.shadowBlur = 16;
-            }
+            if (!cfg.isWhite) { ctx.shadowColor = "rgba(0,0,0,0.9)"; ctx.shadowBlur = 16; }
             ctx.fillText(item.text, 540, currentY, maxTextWidth);
             currentY += Math.round(bigLineH * 0.22);
         } else {
             ctx.fillStyle = cfg.normalColor;
             ctx.font = `800 ${normalSize}px "Noto Sans Devanagari", sans-serif`;
             currentY += Math.round(normalLineH * 0.76);
-            if (!cfg.isWhite) {
-                ctx.shadowColor = "rgba(0,0,0,0.9)";
-                ctx.shadowBlur = 14;
-            }
+            if (!cfg.isWhite) { ctx.shadowColor = "rgba(0,0,0,0.9)"; ctx.shadowBlur = 14; }
             ctx.fillText(item.text, 540, currentY, maxTextWidth);
             currentY += Math.round(normalLineH * 0.24);
         }
@@ -886,13 +616,11 @@ function renderCenteredTypography(ctx, shayariText, cfg) {
 function drawProceduralSadBottom(ctx, yStart, h) {
     const g = ctx.createLinearGradient(0, yStart, 0, yStart + h);
     g.addColorStop(0, "#3a3a48");
-    g.addColorStop(0.5, "#1a1a26");
     g.addColorStop(1, "#090910");
     ctx.fillStyle = g;
     ctx.fillRect(0, yStart, 1080, h);
 }
 
-// Supports Dust, Rain, Snow, or Off
 function drawOverlayEffects(ctx, particles, pType, minY, maxY) {
     if (!particles || particles.length === 0 || pType === "off") return;
     ctx.save();
@@ -917,22 +645,20 @@ function drawOverlayEffects(ctx, particles, pType, minY, maxY) {
 }
 
 // =====================================================
-// 7. BULK IMAGE GENERATION WORKFLOW
+// FRESH BULK GENERATION (NO CACHE CONFLICT)
 // =====================================================
-async function startBulkImages(isResuming = false) {
+async function startBulkImages() {
     const blocks = parseShayariBlocks();
     if (blocks.length === 0) return alert("कृपया कम से कम एक शायरी लिखें!");
 
     const genBtn = document.getElementById("genImgBtn");
     const progressEl = document.getElementById("progressText");
-    document.getElementById("resumeBanner").style.display = "none";
 
-    if (!isResuming) {
-        clearSavedSession();
-    }
+    // Fresh clear gallery to ensure new text is rendered
+    generatedItems = [];
+    document.getElementById("gallery").innerHTML = "";
 
     genBtn.disabled = true;
-    await activateAntiCancelGuard();
 
     const options = {
         mode: document.getElementById("designMode").value,
@@ -944,15 +670,11 @@ async function startBulkImages(isResuming = false) {
         watermark: document.getElementById("watermarkText").value.trim()
     };
 
-    const existingIds = new Set(generatedItems.map(i => i.id));
-
     for (let i = 0; i < blocks.length; i++) {
         const b = blocks[i];
-        if (existingIds.has(b.index)) continue;
+        progressEl.innerText = `⏳ फ्रेश इमेज बन रही है (${i + 1}/${blocks.length}): "${b.title}.png"...`;
 
-        progressEl.innerText = `⏳ इमेज बन रही है (${i + 1}/${blocks.length}): "${b.title}.png"...`;
-
-        const bgImg = await fetchSmartBackground(b.shayari, b.index, options.engine);
+        const bgImg = await fetchBackground(b.shayari, b.index);
 
         const canvas = document.createElement("canvas");
         canvas.width = 1080;
@@ -974,26 +696,11 @@ async function startBulkImages(isResuming = false) {
         };
 
         generatedItems.push(itemObj);
-        savePostToDB(itemObj);
         appendCardToGallery(itemObj);
     }
 
     genBtn.disabled = false;
-    releaseAntiCancelGuard();
-    progressEl.innerText = `✅ सभी ${generatedItems.length} HD इमेजेस तैयार हैं!`;
-    if (generatedItems.length > 0) {
-        document.getElementById("zipBtn").style.display = "inline-block";
-    }
-}
-
-function resumePendingGeneration() {
-    startBulkImages(true);
-}
-
-function renderGalleryFromState() {
-    const gallery = document.getElementById("gallery");
-    gallery.innerHTML = "";
-    generatedItems.forEach(item => appendCardToGallery(item));
+    progressEl.innerText = `✅ सभी ${generatedItems.length} नई इमेजेस सफलतापूर्वक तैयार हैं!`;
     if (generatedItems.length > 0) {
         document.getElementById("zipBtn").style.display = "inline-block";
     }
@@ -1017,39 +724,13 @@ function appendCardToGallery(item) {
     gallery.appendChild(card);
 }
 
-// =====================================================
-// 8. BULK VIDEO CONVERTER (CUSTOM EFFECTS + MANUAL DOWNLOAD)
-// =====================================================
-async function convertAllToVideos() {
-    if (generatedItems.length === 0) {
-        await startBulkImages(false);
-    }
-    const vidBtn = document.getElementById("genVidBtn");
-    const progressEl = document.getElementById("progressText");
-    vidBtn.disabled = true;
-
-    await activateAntiCancelGuard();
-
-    for (let i = 0; i < generatedItems.length; i++) {
-        const item = generatedItems[i];
-        progressEl.innerText = `🎬 वीडियो तैयार हो रही है (${i + 1}/${generatedItems.length}): "${item.title}" (ऑटो-डाउनलोड बंद है, बनने के बाद बटन दबाकर डाउनलोड करें)...`;
-        await recordCanvasVideoForItem(item);
-    }
-
-    vidBtn.disabled = false;
-    releaseAntiCancelGuard();
-    progressEl.innerText = `🎉 सभी ${generatedItems.length} वीडियो तैयार हैं! अब किसी भी कार्ड के "⬇️ Download Video" बटन पर क्लिक करके डाउनलोड करें।`;
-}
-
 async function convertSingleItemToVideo(id) {
     const item = generatedItems.find(x => x.id === id);
     if (!item) return;
     const progressEl = document.getElementById("progressText");
-    await activateAntiCancelGuard();
     progressEl.innerText = `🎬 "${item.title}" की वीडियो बन रही है...`;
     await recordCanvasVideoForItem(item);
-    releaseAntiCancelGuard();
-    progressEl.innerText = `✅ "${item.title}" की वीडियो तैयार है! नीचे हरे बटन पर क्लिक करके डाउनलोड करें।`;
+    progressEl.innerText = `✅ "${item.title}" की वीडियो तैयार है!`;
 }
 
 async function recordCanvasVideoForItem(item) {
@@ -1057,11 +738,6 @@ async function recordCanvasVideoForItem(item) {
     const zoomMode = document.getElementById("zoomEffectMode").value;
     const pType = document.getElementById("particleEffectMode").value;
     const audioInput = document.getElementById("customAudioFile");
-
-    // Refresh current styling options in case user changed Title/Color settings
-    item.options.showTitle = document.getElementById("showTopTitle").value;
-    item.options.titleColor = document.getElementById("titleFillColor").value;
-    item.options.hlColor = document.getElementById("highlightColor").value;
 
     const canvas = document.createElement("canvas");
     canvas.width = 1080;
@@ -1093,37 +769,20 @@ async function recordCanvasVideoForItem(item) {
                 combinedTracks.push(dest.stream.getAudioTracks()[0]);
             }
             await audioEl.play();
-        } catch (e) {
-            console.warn("Audio attach error:", e);
-        }
+        } catch (e) {}
     }
 
     const finalStream = new MediaStream(combinedTracks);
-
     let mimeType = "video/webm;codecs=vp8,opus";
     let ext = "webm";
-    if (MediaRecorder.isTypeSupported("video/mp4")) {
-        mimeType = "video/mp4";
-        ext = "mp4";
-    } else if (MediaRecorder.isTypeSupported("video/webm;codecs=vp9")) {
-        mimeType = "video/webm;codecs=vp9";
-    } else if (!MediaRecorder.isTypeSupported(mimeType)) {
-        mimeType = "video/webm";
-    }
+    if (MediaRecorder.isTypeSupported("video/mp4")) { mimeType = "video/mp4"; ext = "mp4"; }
 
-    const recorder = new MediaRecorder(finalStream, {
-        mimeType: mimeType,
-        videoBitsPerSecond: 4500000
-    });
-
+    const recorder = new MediaRecorder(finalStream, { mimeType, videoBitsPerSecond: 4500000 });
     const chunks = [];
-    recorder.ondataavailable = (e) => {
-        if (e.data && e.data.size > 0) chunks.push(e.data);
-    };
+    recorder.ondataavailable = (e) => { if (e.data && e.data.size > 0) chunks.push(e.data); };
 
     const minY = (item.options.mode === "white_split") ? 940 : 0;
     const count = (pType === "rain") ? 65 : (pType === "off" ? 0 : 38);
-
     const particles = Array.from({ length: count }, () => ({
         x: Math.random() * 1080,
         y: minY + Math.random() * (1920 - minY),
@@ -1134,23 +793,16 @@ async function recordCanvasVideoForItem(item) {
 
     return new Promise((resolve) => {
         recorder.onstop = () => {
-            if (audioEl) {
-                audioEl.pause();
-                audioEl.src = "";
-            }
-            if (audioCtx) {
-                audioCtx.close().catch(() => {});
-            }
+            if (audioEl) { audioEl.pause(); audioEl.src = ""; }
+            if (audioCtx) audioCtx.close().catch(() => {});
 
             const blob = new Blob(chunks, { type: mimeType });
             const vidUrl = URL.createObjectURL(blob);
             const videoFileName = `${item.title}.${ext}`;
 
-            // Show Video Player Preview Inside Card (NO AUTO-DOWNLOAD)
             const wrap = document.getElementById(`media_wrap_${item.id}`);
-            if (wrap) {
-                wrap.innerHTML = `<video src="${vidUrl}" controls loop playsinline></video>`;
-            }
+            if (wrap) wrap.innerHTML = `<video src="${vidUrl}" controls loop playsinline></video>`;
+
             const actions = document.getElementById(`actions_${item.id}`);
             if (actions) {
                 actions.innerHTML = `
@@ -1158,39 +810,25 @@ async function recordCanvasVideoForItem(item) {
                     <a class="dl-btn vid-ready" href="${vidUrl}" download="${videoFileName}">⬇️ Download Video</a>
                 `;
             }
-
             resolve();
         };
 
         recorder.start();
-
-        const fps = 30;
-        const totalFrames = durationSec * fps;
+        const fps = 30, totalFrames = durationSec * fps;
         let frame = 0;
 
         const interval = setInterval(() => {
             frame++;
             const progress = frame / totalFrames;
-
-            // Calculate Camera Zoom according to user selection (Zoom-In / Zoom-Out / OFF)
             let zoom = 1.0;
-            if (zoomMode === "zoom_in") {
-                zoom = 1.0 + progress * 0.14;
-            } else if (zoomMode === "zoom_out") {
-                zoom = 1.14 - progress * 0.14;
-            } else {
-                zoom = 1.0; // OFF
-            }
+            if (zoomMode === "zoom_in") zoom = 1.0 + progress * 0.14;
+            else if (zoomMode === "zoom_out") zoom = 1.14 - progress * 0.14;
 
-            // Update Particles according to effect mode
             particles.forEach(p => {
                 p.y += p.speedY;
                 if (pType === "rain") p.x -= 2.5;
                 if (p.y < minY) p.y = 1915;
-                if (p.y > 1920) {
-                    p.y = minY;
-                    p.x = Math.random() * 1080;
-                }
+                if (p.y > 1920) { p.y = minY; p.x = Math.random() * 1080; }
             });
 
             drawCompletePostFrame(ctx, bgImg, item.displayTitle, item.shayari, item.options, zoom, particles, pType);
@@ -1203,26 +841,28 @@ async function recordCanvasVideoForItem(item) {
     });
 }
 
-// =====================================================
-// 9. BULK ZIP DOWNLOAD
-// =====================================================
+function loadImgWithTimeout(url, timeoutMs) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        const t = setTimeout(() => resolve(null), timeoutMs);
+        img.onload = () => { clearTimeout(t); resolve(img); };
+        img.onerror = () => { clearTimeout(t); resolve(null); };
+        img.src = url;
+    });
+}
+
 async function downloadAllImagesZip() {
     if (generatedItems.length === 0) return;
-    const progressEl = document.getElementById("progressText");
-    progressEl.innerText = "📦 आपके टाइटल नामों के साथ ZIP फाइल बन रही है...";
-
     const zip = new JSZip();
     generatedItems.forEach(item => {
-        const base64Data = item.dataUrl.split(",")[1];
-        zip.file(item.imageName, base64Data, { base64: true });
+        zip.file(item.imageName, item.dataUrl.split(",")[1], { base64: true });
     });
-
     const blob = await zip.generateAsync({ type: "blob" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "Sad_Verse_Titled_Posts.zip";
+    a.download = "Sad_Verse_Posts.zip";
     a.click();
-    progressEl.innerText = "✅ ZIP फाइल सफलतापूर्वक डाउनलोड हो गई!";
 }
 </script>
 
